@@ -2,6 +2,7 @@ import streamlit as st
 import ganji
 import pandas as pd
 import re
+import shutil
 from datetime import date, timedelta
 
 from github_store import (
@@ -1887,12 +1888,27 @@ def tab_input():
     st.subheader("1단계 — 스크린샷 업로드 (선택)")
     st.caption("📌 스크린샷 없이 아래 2단계에서 직접 입력해도 됩니다. 어제 값이 기본으로 채워져 있으니 바뀐 숫자만 수정하세요.")
 
-    uploaded_files = st.file_uploader(
-        "이미지 파일 선택 (PNG / JPG) — 여러 장 동시 선택 가능",
-        type=['png', 'jpg', 'jpeg'],
-        accept_multiple_files=True,
-        key='screenshot_upload',
-    )
+    # tesseract 실행 파일이 있어야 OCR이 의미가 있다. 없으면 업로더를 아예 감춘다 —
+    # 올려 봐야 '인식 0건'만 돌아오면 사람이 이유를 알 수 없다.
+    # (2026-09-08) Streamlit Cloud 서버 이미지에 수명이 끝난 데비안 11 저장소가 섞여
+    # apt 갱신이 실패했고, packages.txt가 있으면 배포 전체가 중단됐다. 사이트를 살리려
+    # packages.txt를 packages.txt.disabled로 떼어 둔 상태다. 이미지가 고쳐지면 되돌린다.
+    if shutil.which('tesseract'):
+        uploaded_files = st.file_uploader(
+            "이미지 파일 선택 (PNG / JPG) — 여러 장 동시 선택 가능",
+            type=['png', 'jpg', 'jpeg'],
+            accept_multiple_files=True,
+            key='screenshot_upload',
+        )
+    else:
+        uploaded_files = []
+        st.warning(
+            "🔧 **스크린샷 자동 인식이 잠시 꺼져 있습니다.** Streamlit Cloud 서버 이미지의 "
+            "낡은 데비안 저장소 때문에 OCR 설치 단계에서 배포가 통째로 실패해, "
+            "사이트를 살리려고 OCR 패키지를 임시로 떼어 놓았습니다(2026-09-08). "
+            "**아래 2단계에서 숫자를 직접 입력**하시면 저장·집계는 평소와 똑같이 됩니다. "
+            "서버 이미지가 고쳐지면 자동 인식은 되돌립니다."
+        )
 
     # 파일 목록이 바뀌면 OCR 상태 초기화
     current_names = [f.name for f in uploaded_files] if uploaded_files else []
