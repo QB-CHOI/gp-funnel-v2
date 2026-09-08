@@ -83,17 +83,30 @@ def _encode_image(image: Image.Image) -> tuple[str, str]:
 
 
 def _call_model(model: str, img_b64: str, mime_type: str,
-                prompt: str, api_key: str) -> dict:
-    """단일 모델 호출. 응답 dict 반환, 실패 시 예외."""
+                prompt: str, api_key: str, *, tuned: bool = True) -> dict:
+    """단일 모델 호출. 응답 dict 반환, 실패 시 예외.
+
+    tuned=True면 두 가지를 요구한다:
+      thinkingBudget=0 — 최신 모델은 '생각'에 출력 토큰을 먼저 쓴다. 상한이
+        낮으면 생각만 하다 예산이 끝나 본문이 빈 채로 돌아온다(finishReason=
+        MAX_TOKENS). 읽어 옮기는 일에 생각은 필요 없다.
+      responseMimeType=application/json — 코드블록·설명 없이 JSON만 받는다.
+    옛 모델은 이 항목들을 모르고 400을 내므로, 그때는 tuned=False로 한 번 더
+    부른다(호출부에서 처리).
+    """
+    gen = {"temperature": 0.1, "maxOutputTokens": 4096}
+    if tuned:
+        gen["responseMimeType"] = "application/json"
+        gen["thinkingConfig"] = {"thinkingBudget": 0}
     body = {
         "contents": [{"parts": [
             {"inline_data": {"mime_type": mime_type, "data": img_b64}},
             {"text": prompt},
         ]}],
-        "generationConfig": {"temperature": 0.1, "maxOutputTokens": 512},
+        "generationConfig": gen,
     }
     url = f"{_BASE}/v1beta/models/{model}:generateContent?key={api_key}"
-    resp = requests.post(url, json=body, timeout=45)
+    resp = requests.post(url, json=body, timeout=60)
     if resp.status_code == 200:
         return resp.json()
     try:
@@ -101,6 +114,24 @@ def _call_model(model: str, img_b64: str, mime_type: str,
     except Exception:
         err = resp.text[:200]
     raise RuntimeError(f"[{resp.status_code}] {model}: {err}")
+
+
+def _text_of(data: dict) -> str:
+    """응답에서 본문 텍스트만 꺼낸다.
+
+    parts[0]['text']로 바로 들어가면 안 된다 — 안전 필터로 후보가 아예 없거나,
+    출력 예산이 끝나 parts가 비거나, 텍스트가 여러 조각으로 나뉘어 오는 경우가
+    모두 있다. 비어 있으면 '왜 비었는지'(finishReason)를 담아 올린다.
+    """
+    cands = data.get("candidates") or []
+    if not cands:
+        raise RuntimeError(f"후보 없음 — promptFeedback={data.get('promptFeedback')}")
+    c = cands[0]
+    parts = (c.get("content") or {}).get("parts") or []
+    text = "".join(p.get("text", "") for p in parts if isinstance(p, dict))
+    if not text.strip():
+        raise RuntimeError(f"빈 응답 — finishReason={c.get('finishReason')}")
+    return text
 
 
 def extract_members(image: Image.Image, api_key: str, rooms: dict) -> list:
@@ -129,15 +160,19 @@ def extract_members(image: Image.Image, api_key: str, rooms: dict) -> list:
 
     errors = []
     for model in _models(api_key):
-        try:
-            data = _call_model(model, img_b64, mime_type, prompt, api_key)
-            text = data["candidates"][0]["content"]["parts"][0]["text"]
-            result = _parse_response(text, rooms)
-            if result:
-                return result
-        except Exception as e:
-            errors.append(str(e))
-            continue
+        for tuned in (True, False):     # 옛 모델은 tuned 항목을 모른다
+            try:
+                data = _call_model(model, img_b64, mime_type, prompt,
+                                   api_key, tuned=tuned)
+                result = _parse_response(_text_of(data), rooms)
+                if result:
+                    return result
+                errors.append(f"{model}: 읽었으나 유효한 방이 없음")
+                break                   # 모델은 답했다. 설정을 바꿔 봐야 같다
+            except Exception as e:
+                errors.append(f"{model}(tuned={tuned}): {e}")
+                if "400" not in str(e):
+                    break               # 설정 문제가 아니면 재시도 의미 없음
 
     # 한 모델이 죽어서 실패한 것인지, 키·할당량 문제인지 구분이 되어야
     # 사람이 다음에 무엇을 할지 안다. 시도한 모델 이름을 그대로 남긴다.
