@@ -1,8 +1,8 @@
 {
   "ok": true,
   "topic": "타로",
-  "date": "2026-09-05",
-  "generatedAt": "2026-09-04T22:14:03.467Z",
+  "date": "2026-09-08",
+  "generatedAt": "2026-09-07T22:37:21.256Z",
   "brackets": [
     "10대",
     "20대",
@@ -26,8 +26,8 @@
         },
         "30대": {
           "deltaPercent": -20,
-          "level": 25,
-          "recentAvg": 24.679482500000002
+          "level": 23,
+          "recentAvg": 23.192765
         },
         "40대": {
           "deltaPercent": 105,
@@ -58,8 +58,8 @@
         },
         "30대": {
           "deltaPercent": 7,
-          "level": 69,
-          "recentAvg": 68.9102525
+          "level": 65,
+          "recentAvg": 64.7590325
         },
         "40대": {
           "deltaPercent": -1,
@@ -90,8 +90,8 @@
         },
         "30대": {
           "deltaPercent": -10,
-          "level": 61,
-          "recentAvg": 61.21794249999999
+          "level": 58,
+          "recentAvg": 57.5301175
         },
         "40대": {
           "deltaPercent": -16,
@@ -122,8 +122,8 @@
         },
         "30대": {
           "deltaPercent": -4,
-          "level": 21,
-          "recentAvg": 21.474355000000003
+          "level": 20,
+          "recentAvg": 20.1807175
         },
         "40대": {
           "deltaPercent": 0,

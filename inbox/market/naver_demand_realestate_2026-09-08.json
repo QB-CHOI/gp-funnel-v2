@@ -1,8 +1,8 @@
 {
   "ok": true,
   "topic": "부동산",
-  "date": "2026-09-05",
-  "generatedAt": "2026-09-04T22:46:24.896Z",
+  "date": "2026-09-08",
+  "generatedAt": "2026-09-08T00:56:26.801Z",
   "seeds": [
     "부동산 전망",
     "집값 전망",
@@ -836,321 +836,321 @@
   "keywords": [
     {
       "keyword": "부동산",
-      "pcMonthly": 142500,
-      "mobileMonthly": 661000,
-      "totalMonthly": 803500,
+      "pcMonthly": 139000,
+      "mobileMonthly": 657900,
+      "totalMonthly": 796900,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "아파트",
-      "pcMonthly": 58800,
-      "mobileMonthly": 479200,
-      "totalMonthly": 538000,
+      "pcMonthly": 52100,
+      "mobileMonthly": 415800,
+      "totalMonthly": 467900,
       "competition": "중간",
       "isSeed": false
     },
     {
       "keyword": "법원경매",
-      "pcMonthly": 69200,
-      "mobileMonthly": 47200,
-      "totalMonthly": 116400,
+      "pcMonthly": 68400,
+      "mobileMonthly": 47400,
+      "totalMonthly": 115800,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "대법원경매",
-      "pcMonthly": 65800,
+      "pcMonthly": 65100,
       "mobileMonthly": 36200,
-      "totalMonthly": 102000,
+      "totalMonthly": 101300,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "부동산스터디",
-      "pcMonthly": 19200,
-      "mobileMonthly": 80600,
-      "totalMonthly": 99800,
-      "competition": "높음",
-      "isSeed": false
-    },
-    {
-      "keyword": "ETF",
-      "pcMonthly": 24500,
-      "mobileMonthly": 66600,
-      "totalMonthly": 91100,
+      "pcMonthly": 18600,
+      "mobileMonthly": 78600,
+      "totalMonthly": 97200,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "LH임대주택",
-      "pcMonthly": 28800,
-      "mobileMonthly": 57100,
-      "totalMonthly": 85900,
+      "pcMonthly": 28600,
+      "mobileMonthly": 56700,
+      "totalMonthly": 85300,
+      "competition": "높음",
+      "isSeed": false
+    },
+    {
+      "keyword": "ETF",
+      "pcMonthly": 22900,
+      "mobileMonthly": 62400,
+      "totalMonthly": 85300,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "청년안심주택",
-      "pcMonthly": 28100,
-      "mobileMonthly": 42600,
-      "totalMonthly": 70700,
+      "pcMonthly": 26400,
+      "mobileMonthly": 39700,
+      "totalMonthly": 66100,
       "competition": "중간",
       "isSeed": false
     },
     {
       "keyword": "광명역",
-      "pcMonthly": 12600,
+      "pcMonthly": 12400,
       "mobileMonthly": 53400,
-      "totalMonthly": 66000,
+      "totalMonthly": 65800,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "행복주택",
-      "pcMonthly": 19100,
-      "mobileMonthly": 37400,
+      "pcMonthly": 19000,
+      "mobileMonthly": 37500,
       "totalMonthly": 56500,
       "competition": "중간",
       "isSeed": false
     },
     {
       "keyword": "청약",
-      "pcMonthly": 23600,
-      "mobileMonthly": 30400,
-      "totalMonthly": 54000,
+      "pcMonthly": 23300,
+      "mobileMonthly": 30300,
+      "totalMonthly": 53600,
       "competition": "높음",
       "isSeed": true
     },
     {
       "keyword": "투자자산운용사",
-      "pcMonthly": 14700,
-      "mobileMonthly": 35600,
-      "totalMonthly": 50300,
-      "competition": "높음",
-      "isSeed": false
-    },
-    {
-      "keyword": "청년주택",
-      "pcMonthly": 14500,
-      "mobileMonthly": 35100,
-      "totalMonthly": 49600,
+      "pcMonthly": 14900,
+      "mobileMonthly": 35800,
+      "totalMonthly": 50700,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "금정역",
-      "pcMonthly": 5160,
-      "mobileMonthly": 44100,
-      "totalMonthly": 49260,
+      "pcMonthly": 4970,
+      "mobileMonthly": 44000,
+      "totalMonthly": 48970,
+      "competition": "높음",
+      "isSeed": false
+    },
+    {
+      "keyword": "청년주택",
+      "pcMonthly": 14100,
+      "mobileMonthly": 34600,
+      "totalMonthly": 48700,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "경매",
-      "pcMonthly": 21700,
-      "mobileMonthly": 24700,
-      "totalMonthly": 46400,
+      "pcMonthly": 21500,
+      "mobileMonthly": 25000,
+      "totalMonthly": 46500,
       "competition": "높음",
       "isSeed": true
     },
     {
       "keyword": "송파헬리오시티",
-      "pcMonthly": 4210,
-      "mobileMonthly": 37900,
-      "totalMonthly": 42110,
+      "pcMonthly": 4110,
+      "mobileMonthly": 37600,
+      "totalMonthly": 41710,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "성수동",
-      "pcMonthly": 9170,
-      "mobileMonthly": 32600,
-      "totalMonthly": 41770,
-      "competition": "높음",
-      "isSeed": false
-    },
-    {
-      "keyword": "공인중개사시험",
-      "pcMonthly": 9150,
-      "mobileMonthly": 31700,
-      "totalMonthly": 40850,
-      "competition": "중간",
-      "isSeed": false
-    },
-    {
-      "keyword": "아파트실거래가조회",
-      "pcMonthly": 19700,
-      "mobileMonthly": 19900,
-      "totalMonthly": 39600,
+      "pcMonthly": 8980,
+      "mobileMonthly": 32200,
+      "totalMonthly": 41180,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "주택청약",
-      "pcMonthly": 11100,
-      "mobileMonthly": 28000,
+      "pcMonthly": 11000,
+      "mobileMonthly": 28400,
+      "totalMonthly": 39400,
+      "competition": "높음",
+      "isSeed": false
+    },
+    {
+      "keyword": "아파트실거래가조회",
+      "pcMonthly": 19300,
+      "mobileMonthly": 19800,
       "totalMonthly": 39100,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "대법원경매정보",
-      "pcMonthly": 22500,
-      "mobileMonthly": 16300,
-      "totalMonthly": 38800,
+      "pcMonthly": 21900,
+      "mobileMonthly": 16000,
+      "totalMonthly": 37900,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "증여세",
-      "pcMonthly": 8590,
-      "mobileMonthly": 29500,
-      "totalMonthly": 38090,
+      "pcMonthly": 8280,
+      "mobileMonthly": 29000,
+      "totalMonthly": 37280,
       "competition": "높음",
       "isSeed": false
     },
     {
-      "keyword": "종부세",
+      "keyword": "공인중개사시험",
       "pcMonthly": 7790,
-      "mobileMonthly": 27500,
-      "totalMonthly": 35290,
-      "competition": "중간",
-      "isSeed": false
-    },
-    {
-      "keyword": "법무사",
-      "pcMonthly": 8070,
-      "mobileMonthly": 26300,
-      "totalMonthly": 34370,
+      "mobileMonthly": 28600,
+      "totalMonthly": 36390,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "아파트매매",
-      "pcMonthly": 4090,
-      "mobileMonthly": 30100,
-      "totalMonthly": 34190,
+      "pcMonthly": 4150,
+      "mobileMonthly": 30700,
+      "totalMonthly": 34850,
       "competition": "높음",
       "isSeed": true
     },
     {
+      "keyword": "법무사",
+      "pcMonthly": 7850,
+      "mobileMonthly": 26000,
+      "totalMonthly": 33850,
+      "competition": "높음",
+      "isSeed": false
+    },
+    {
+      "keyword": "종부세",
+      "pcMonthly": 7140,
+      "mobileMonthly": 25400,
+      "totalMonthly": 32540,
+      "competition": "높음",
+      "isSeed": false
+    },
+    {
       "keyword": "중개수수료계산기",
-      "pcMonthly": 11500,
-      "mobileMonthly": 21600,
-      "totalMonthly": 33100,
+      "pcMonthly": 11200,
+      "mobileMonthly": 21300,
+      "totalMonthly": 32500,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "전세",
-      "pcMonthly": 4860,
-      "mobileMonthly": 27900,
-      "totalMonthly": 32760,
+      "pcMonthly": 4750,
+      "mobileMonthly": 27600,
+      "totalMonthly": 32350,
       "competition": "높음",
       "isSeed": true
     },
     {
       "keyword": "LH행복주택",
-      "pcMonthly": 12600,
-      "mobileMonthly": 19400,
-      "totalMonthly": 32000,
+      "pcMonthly": 12400,
+      "mobileMonthly": 19200,
+      "totalMonthly": 31600,
       "competition": "낮음",
       "isSeed": false
     },
     {
+      "keyword": "망포역",
+      "pcMonthly": 3910,
+      "mobileMonthly": 27000,
+      "totalMonthly": 30910,
+      "competition": "높음",
+      "isSeed": false
+    },
+    {
       "keyword": "운정스타필드",
-      "pcMonthly": 2560,
-      "mobileMonthly": 29100,
-      "totalMonthly": 31660,
+      "pcMonthly": 2400,
+      "mobileMonthly": 28200,
+      "totalMonthly": 30600,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "공인중개사",
-      "pcMonthly": 9290,
-      "mobileMonthly": 22100,
-      "totalMonthly": 31390,
-      "competition": "높음",
-      "isSeed": false
-    },
-    {
-      "keyword": "망포역",
-      "pcMonthly": 4000,
-      "mobileMonthly": 27200,
-      "totalMonthly": 31200,
+      "pcMonthly": 8070,
+      "mobileMonthly": 20700,
+      "totalMonthly": 28770,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "월세",
-      "pcMonthly": 4560,
-      "mobileMonthly": 23900,
-      "totalMonthly": 28460,
+      "pcMonthly": 4520,
+      "mobileMonthly": 24000,
+      "totalMonthly": 28520,
       "competition": "높음",
       "isSeed": true
     },
     {
       "keyword": "의왕역",
-      "pcMonthly": 4370,
-      "mobileMonthly": 23700,
-      "totalMonthly": 28070,
+      "pcMonthly": 4400,
+      "mobileMonthly": 24100,
+      "totalMonthly": 28500,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "한남더힐",
-      "pcMonthly": 5760,
-      "mobileMonthly": 21400,
-      "totalMonthly": 27160,
+      "pcMonthly": 5570,
+      "mobileMonthly": 21000,
+      "totalMonthly": 26570,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "오피스텔",
-      "pcMonthly": 4880,
+      "pcMonthly": 4780,
       "mobileMonthly": 21400,
-      "totalMonthly": 26280,
+      "totalMonthly": 26180,
       "competition": "높음",
       "isSeed": true
     },
     {
       "keyword": "고시원",
-      "pcMonthly": 3920,
-      "mobileMonthly": 22000,
-      "totalMonthly": 25920,
+      "pcMonthly": 3930,
+      "mobileMonthly": 22100,
+      "totalMonthly": 26030,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "원룸",
-      "pcMonthly": 5070,
-      "mobileMonthly": 20500,
-      "totalMonthly": 25570,
-      "competition": "높음",
-      "isSeed": false
-    },
-    {
-      "keyword": "아파트실거래가",
-      "pcMonthly": 13400,
-      "mobileMonthly": 11600,
-      "totalMonthly": 25000,
+      "pcMonthly": 5020,
+      "mobileMonthly": 20600,
+      "totalMonthly": 25620,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "에테르노청담",
-      "pcMonthly": 4410,
-      "mobileMonthly": 20400,
-      "totalMonthly": 24810,
+      "pcMonthly": 3860,
+      "mobileMonthly": 21400,
+      "totalMonthly": 25260,
+      "competition": "높음",
+      "isSeed": false
+    },
+    {
+      "keyword": "아파트실거래가",
+      "pcMonthly": 13300,
+      "mobileMonthly": 11400,
+      "totalMonthly": 24700,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "부동산중개수수료",
-      "pcMonthly": 5110,
-      "mobileMonthly": 19500,
-      "totalMonthly": 24610,
+      "pcMonthly": 5000,
+      "mobileMonthly": 19400,
+      "totalMonthly": 24400,
       "competition": "낮음",
       "isSeed": false
     }
@@ -1158,113 +1158,113 @@
   "seedKeywords": [
     {
       "keyword": "청약",
-      "pcMonthly": 23600,
-      "mobileMonthly": 30400,
-      "totalMonthly": 54000,
+      "pcMonthly": 23300,
+      "mobileMonthly": 30300,
+      "totalMonthly": 53600,
       "competition": "높음",
       "isSeed": true
     },
     {
       "keyword": "경매",
-      "pcMonthly": 21700,
-      "mobileMonthly": 24700,
-      "totalMonthly": 46400,
+      "pcMonthly": 21500,
+      "mobileMonthly": 25000,
+      "totalMonthly": 46500,
       "competition": "높음",
       "isSeed": true
     },
     {
       "keyword": "아파트매매",
-      "pcMonthly": 4090,
-      "mobileMonthly": 30100,
-      "totalMonthly": 34190,
+      "pcMonthly": 4150,
+      "mobileMonthly": 30700,
+      "totalMonthly": 34850,
       "competition": "높음",
       "isSeed": true
     },
     {
       "keyword": "전세",
-      "pcMonthly": 4860,
-      "mobileMonthly": 27900,
-      "totalMonthly": 32760,
+      "pcMonthly": 4750,
+      "mobileMonthly": 27600,
+      "totalMonthly": 32350,
       "competition": "높음",
       "isSeed": true
     },
     {
       "keyword": "월세",
-      "pcMonthly": 4560,
-      "mobileMonthly": 23900,
-      "totalMonthly": 28460,
+      "pcMonthly": 4520,
+      "mobileMonthly": 24000,
+      "totalMonthly": 28520,
       "competition": "높음",
       "isSeed": true
     },
     {
       "keyword": "오피스텔",
-      "pcMonthly": 4880,
+      "pcMonthly": 4780,
       "mobileMonthly": 21400,
-      "totalMonthly": 26280,
+      "totalMonthly": 26180,
       "competition": "높음",
       "isSeed": true
     },
     {
       "keyword": "재개발",
-      "pcMonthly": 3840,
-      "mobileMonthly": 7600,
-      "totalMonthly": 11440,
+      "pcMonthly": 3810,
+      "mobileMonthly": 7510,
+      "totalMonthly": 11320,
       "competition": "높음",
       "isSeed": true
     },
     {
       "keyword": "재건축",
-      "pcMonthly": 2450,
-      "mobileMonthly": 6210,
-      "totalMonthly": 8660,
+      "pcMonthly": 2410,
+      "mobileMonthly": 6040,
+      "totalMonthly": 8450,
       "competition": "높음",
       "isSeed": true
     },
     {
       "keyword": "분양",
-      "pcMonthly": 2840,
-      "mobileMonthly": 5440,
-      "totalMonthly": 8280,
+      "pcMonthly": 2780,
+      "mobileMonthly": 5360,
+      "totalMonthly": 8140,
       "competition": "높음",
       "isSeed": true
     },
     {
       "keyword": "집값전망",
-      "pcMonthly": 950,
-      "mobileMonthly": 4510,
-      "totalMonthly": 5460,
+      "pcMonthly": 930,
+      "mobileMonthly": 4470,
+      "totalMonthly": 5400,
       "competition": "높음",
       "isSeed": true
     },
     {
       "keyword": "부동산전망",
-      "pcMonthly": 1260,
+      "pcMonthly": 1230,
       "mobileMonthly": 3190,
-      "totalMonthly": 4450,
+      "totalMonthly": 4420,
       "competition": "높음",
       "isSeed": true
     },
     {
       "keyword": "갭투자",
-      "pcMonthly": 660,
-      "mobileMonthly": 1860,
-      "totalMonthly": 2520,
+      "pcMonthly": 630,
+      "mobileMonthly": 1840,
+      "totalMonthly": 2470,
       "competition": "높음",
       "isSeed": true
     },
     {
       "keyword": "부동산투자",
-      "pcMonthly": 320,
-      "mobileMonthly": 850,
-      "totalMonthly": 1170,
+      "pcMonthly": 360,
+      "mobileMonthly": 880,
+      "totalMonthly": 1240,
       "competition": "높음",
       "isSeed": true
     },
     {
       "keyword": "금리부동산",
       "pcMonthly": 140,
-      "mobileMonthly": 310,
-      "totalMonthly": 450,
+      "mobileMonthly": 320,
+      "totalMonthly": 460,
       "competition": "높음",
       "isSeed": true
     }
@@ -1272,190 +1272,190 @@
   "newDiscoveries": [
     {
       "keyword": "부동산",
-      "pcMonthly": 142500,
-      "mobileMonthly": 661000,
-      "totalMonthly": 803500,
+      "pcMonthly": 139000,
+      "mobileMonthly": 657900,
+      "totalMonthly": 796900,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "아파트",
-      "pcMonthly": 58800,
-      "mobileMonthly": 479200,
-      "totalMonthly": 538000,
+      "pcMonthly": 52100,
+      "mobileMonthly": 415800,
+      "totalMonthly": 467900,
       "competition": "중간",
       "isSeed": false
     },
     {
       "keyword": "법원경매",
-      "pcMonthly": 69200,
-      "mobileMonthly": 47200,
-      "totalMonthly": 116400,
+      "pcMonthly": 68400,
+      "mobileMonthly": 47400,
+      "totalMonthly": 115800,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "대법원경매",
-      "pcMonthly": 65800,
+      "pcMonthly": 65100,
       "mobileMonthly": 36200,
-      "totalMonthly": 102000,
+      "totalMonthly": 101300,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "부동산스터디",
-      "pcMonthly": 19200,
-      "mobileMonthly": 80600,
-      "totalMonthly": 99800,
-      "competition": "높음",
-      "isSeed": false
-    },
-    {
-      "keyword": "ETF",
-      "pcMonthly": 24500,
-      "mobileMonthly": 66600,
-      "totalMonthly": 91100,
+      "pcMonthly": 18600,
+      "mobileMonthly": 78600,
+      "totalMonthly": 97200,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "LH임대주택",
-      "pcMonthly": 28800,
-      "mobileMonthly": 57100,
-      "totalMonthly": 85900,
+      "pcMonthly": 28600,
+      "mobileMonthly": 56700,
+      "totalMonthly": 85300,
+      "competition": "높음",
+      "isSeed": false
+    },
+    {
+      "keyword": "ETF",
+      "pcMonthly": 22900,
+      "mobileMonthly": 62400,
+      "totalMonthly": 85300,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "청년안심주택",
-      "pcMonthly": 28100,
-      "mobileMonthly": 42600,
-      "totalMonthly": 70700,
+      "pcMonthly": 26400,
+      "mobileMonthly": 39700,
+      "totalMonthly": 66100,
       "competition": "중간",
       "isSeed": false
     },
     {
       "keyword": "광명역",
-      "pcMonthly": 12600,
+      "pcMonthly": 12400,
       "mobileMonthly": 53400,
-      "totalMonthly": 66000,
+      "totalMonthly": 65800,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "행복주택",
-      "pcMonthly": 19100,
-      "mobileMonthly": 37400,
+      "pcMonthly": 19000,
+      "mobileMonthly": 37500,
       "totalMonthly": 56500,
       "competition": "중간",
       "isSeed": false
     },
     {
       "keyword": "투자자산운용사",
-      "pcMonthly": 14700,
-      "mobileMonthly": 35600,
-      "totalMonthly": 50300,
-      "competition": "높음",
-      "isSeed": false
-    },
-    {
-      "keyword": "청년주택",
-      "pcMonthly": 14500,
-      "mobileMonthly": 35100,
-      "totalMonthly": 49600,
+      "pcMonthly": 14900,
+      "mobileMonthly": 35800,
+      "totalMonthly": 50700,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "금정역",
-      "pcMonthly": 5160,
-      "mobileMonthly": 44100,
-      "totalMonthly": 49260,
+      "pcMonthly": 4970,
+      "mobileMonthly": 44000,
+      "totalMonthly": 48970,
+      "competition": "높음",
+      "isSeed": false
+    },
+    {
+      "keyword": "청년주택",
+      "pcMonthly": 14100,
+      "mobileMonthly": 34600,
+      "totalMonthly": 48700,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "송파헬리오시티",
-      "pcMonthly": 4210,
-      "mobileMonthly": 37900,
-      "totalMonthly": 42110,
+      "pcMonthly": 4110,
+      "mobileMonthly": 37600,
+      "totalMonthly": 41710,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "성수동",
-      "pcMonthly": 9170,
-      "mobileMonthly": 32600,
-      "totalMonthly": 41770,
-      "competition": "높음",
-      "isSeed": false
-    },
-    {
-      "keyword": "공인중개사시험",
-      "pcMonthly": 9150,
-      "mobileMonthly": 31700,
-      "totalMonthly": 40850,
-      "competition": "중간",
-      "isSeed": false
-    },
-    {
-      "keyword": "아파트실거래가조회",
-      "pcMonthly": 19700,
-      "mobileMonthly": 19900,
-      "totalMonthly": 39600,
+      "pcMonthly": 8980,
+      "mobileMonthly": 32200,
+      "totalMonthly": 41180,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "주택청약",
-      "pcMonthly": 11100,
-      "mobileMonthly": 28000,
+      "pcMonthly": 11000,
+      "mobileMonthly": 28400,
+      "totalMonthly": 39400,
+      "competition": "높음",
+      "isSeed": false
+    },
+    {
+      "keyword": "아파트실거래가조회",
+      "pcMonthly": 19300,
+      "mobileMonthly": 19800,
       "totalMonthly": 39100,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "대법원경매정보",
-      "pcMonthly": 22500,
-      "mobileMonthly": 16300,
-      "totalMonthly": 38800,
+      "pcMonthly": 21900,
+      "mobileMonthly": 16000,
+      "totalMonthly": 37900,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "증여세",
-      "pcMonthly": 8590,
-      "mobileMonthly": 29500,
-      "totalMonthly": 38090,
+      "pcMonthly": 8280,
+      "mobileMonthly": 29000,
+      "totalMonthly": 37280,
+      "competition": "높음",
+      "isSeed": false
+    },
+    {
+      "keyword": "공인중개사시험",
+      "pcMonthly": 7790,
+      "mobileMonthly": 28600,
+      "totalMonthly": 36390,
       "competition": "높음",
       "isSeed": false
     }
   ],
   "communityDemand": {
     "enough": true,
-    "scanned": 1150,
-    "questionCount": 51,
-    "noiseFiltered": 1099,
+    "scanned": 1200,
+    "questionCount": 65,
+    "noiseFiltered": 1135,
     "hotSeeds": [
       {
         "seed": "집값 전망",
-        "count": 29
+        "count": 30
       },
       {
         "seed": "부동산 전망",
-        "count": 8
-      },
-      {
-        "seed": "아파트 매매",
-        "count": 4
+        "count": 11
       },
       {
         "seed": "월세",
-        "count": 4
+        "count": 10
+      },
+      {
+        "seed": "재개발",
+        "count": 7
       },
       {
         "seed": "청약",
-        "count": 4
+        "count": 5
       }
     ],
     "posts": [
@@ -1474,32 +1474,32 @@
       {
         "seed": "아파트 매매",
         "kind": "지식iN",
-        "title": "주택연금후 아파트월세 가능한가요?",
-        "link": "https://kin.naver.com/qna/detail.naver?dirId=40201&docId=495035094&answerNo=2"
+        "title": "아파트 상속 받는자가 취등록세나 상속세를 못낸다면?",
+        "link": "https://kin.naver.com/qna/detail.naver?dirId=40303&docId=478316769&answerNo=4"
       },
       {
         "seed": "월세",
         "kind": "지식iN",
-        "title": "월세집인데 집주인가전제품이 경매압류딱지가 붙었을때?",
-        "link": "https://kin.naver.com/qna/detail.naver?dirId=60214&docId=495035993&answerNo=1"
+        "title": "월세집 전입신고 안하면 안되나요?",
+        "link": "https://kin.naver.com/qna/detail.naver?dirId=60202&docId=495074721&answerNo=3"
       },
       {
         "seed": "청약",
-        "kind": "카페",
-        "title": "청약통장 오래 넣었는데… 세대주 조건 때문에 청약 못 넣는다고요?",
-        "link": "https://cafe.naver.com/engmstudy/3180705"
+        "kind": "지식iN",
+        "title": "신혼부부 특공 청약시 궁금한점 있습니당 ㅠㅠ",
+        "link": "https://kin.naver.com/qna/detail.naver?dirId=40203&docId=495068110&answerNo=3"
       },
       {
         "seed": "재개발",
-        "kind": "지식iN",
-        "title": "재개발지역인데 임대 내놓을때 손님께 꼭 고시해야하나요?",
-        "link": "https://kin.naver.com/qna/detail.naver?dirId=60202&docId=495025397&answerNo=2"
+        "kind": "카페",
+        "title": "울산 남구 푸른,동산마을 재개발 어찌 될까요?",
+        "link": "https://cafe.naver.com/kyerongapartment/3604532"
       },
       {
         "seed": "부동산 전망",
-        "kind": "지식iN",
-        "title": "공인중개사 전망과 시험 난이도에 대해 여쭤봅니다.",
-        "link": "https://kin.naver.com/qna/detail.naver?dirId=406&docId=494424148&answerNo=9"
+        "kind": "카페",
+        "title": "영통 부동산 전망 앞으로 어떻게 될지 궁금하네요",
+        "link": "https://cafe.naver.com/kakaofriendstory/34568"
       },
       {
         "seed": "집값 전망",
@@ -1510,45 +1510,59 @@
       {
         "seed": "아파트 매매",
         "kind": "지식iN",
-        "title": "실거주의무 아파트 매입신청 거부 가능성은?",
-        "link": "https://kin.naver.com/qna/detail.naver?dirId=60215&docId=495031094&answerNo=1"
+        "title": "아파트 두채를 받을 시 이주비하고 대출이 막히나요?",
+        "link": "https://kin.naver.com/qna/detail.naver?dirId=402&docId=495068982&answerNo=1"
       },
       {
         "seed": "월세",
         "kind": "지식iN",
-        "title": "월세 중도퇴거 어케하는거에요?",
-        "link": "https://kin.naver.com/qna/detail.naver?dirId=4020202&docId=495034053&answerNo=3"
+        "title": "원룸 월세 창문쪽 누수로 인해 이사 갈 수 있나요",
+        "link": "https://kin.naver.com/qna/detail.naver?dirId=80902&docId=495069565&answerNo=2"
       },
       {
         "seed": "청약",
         "kind": "카페",
-        "title": "대구 청약일정 언제 또 있을까요?",
-        "link": "https://cafe.naver.com/dsmds/252349"
+        "title": "구 청약저축 통장을 주택청약종합저축으로 전환해야 할까요???",
+        "link": "https://cafe.naver.com/onepieceholicplus/6164853"
       },
       {
-        "seed": "부동산 전망",
+        "seed": "재개발",
         "kind": "카페",
-        "title": "'부천의 강북, 강남, 신도시. 어디를 사야하나?' / 2026부동산전망 부천편 01화....",
-        "link": "https://cafe.naver.com/rainup/3564876"
+        "title": "광천 재개발 궁금사항이 있습니다.",
+        "link": "https://cafe.naver.com/sutdytool/503955"
       }
     ]
   },
   "newsSignals": {
-    "scanned": 2,
-    "issueCount": 2,
+    "scanned": 4,
+    "issueCount": 4,
     "articles": [
       {
         "seed": "전세",
-        "title": "[단독] 전세도 내 집도 멀어진 20대…주택대출 공제 60%는 40·50대",
-        "link": "https://n.news.naver.com/mnews/article/469/0000952228?sid=101",
-        "publishedAt": "2026-09-04T19:30:00.000Z",
+        "title": "“1억 싼데 신축 전세? 이틀 밤도 샙니다”…대구 전세분양 현장에 ‘오...",
+        "link": "https://n.news.naver.com/mnews/article/009/0005731837?sid=101",
+        "publishedAt": "2026-09-08T00:51:00.000Z",
+        "coverage": 1
+      },
+      {
+        "seed": "부동산 전망",
+        "title": "공사채 시장 최대 발행주체 부상한 LH…\"수급 좌우 전망\"(종합)",
+        "link": "https://n.news.naver.com/mnews/article/001/0016296003?sid=101",
+        "publishedAt": "2026-09-08T00:08:00.000Z",
         "coverage": 1
       },
       {
         "seed": "아파트 매매",
-        "title": "[주간부동산시황] 전국 아파트값 상승세 둔화…수도권은 오름세 지속",
-        "link": "https://www.asiatime.co.kr/article/20260904500240",
-        "publishedAt": "2026-09-04T15:26:00.000Z",
+        "title": "대출 문턱 높아지자 서울 밖으로…경기·인천 아파트 찾는 서울 사람들",
+        "link": "https://n.news.naver.com/mnews/article/119/0003130077?sid=101",
+        "publishedAt": "2026-09-07T23:23:00.000Z",
+        "coverage": 1
+      },
+      {
+        "seed": "집값 전망",
+        "title": "\"상승세 한 번도 꺾인 적 없어\"...고공행진하는 서울 집값 [자막뉴스]",
+        "link": "https://n.news.naver.com/mnews/article/052/0002404093?sid=101",
+        "publishedAt": "2026-09-07T23:13:00.000Z",
         "coverage": 1
       }
     ],

@@ -1,8 +1,8 @@
 {
   "ok": true,
   "topic": "사주",
-  "date": "2026-09-05",
-  "generatedAt": "2026-09-04T23:51:35.649Z",
+  "date": "2026-09-08",
+  "generatedAt": "2026-09-08T00:38:17.963Z",
   "brackets": [
     "10대",
     "20대",
@@ -15,19 +15,19 @@
       "keyword": "결혼운",
       "byAge": {
         "10대": {
-          "deltaPercent": 19,
+          "deltaPercent": 16,
           "level": 37,
           "recentAvg": 36.538455
         },
         "20대": {
-          "deltaPercent": -9,
-          "level": 74,
-          "recentAvg": 73.5294075
+          "deltaPercent": 2,
+          "level": 80,
+          "recentAvg": 80.39215250000001
         },
         "30대": {
-          "deltaPercent": -7,
-          "level": 79,
-          "recentAvg": 78.64582999999999
+          "deltaPercent": 2,
+          "level": 84,
+          "recentAvg": 84.374995
         },
         "40대": {
           "deltaPercent": -31,
@@ -35,13 +35,13 @@
           "recentAvg": 38.157889999999995
         },
         "50대+": {
-          "deltaPercent": 94,
-          "level": 64,
-          "recentAvg": 63.63636
+          "deltaPercent": 95,
+          "level": 67,
+          "recentAvg": 66.6666625
         }
       },
       "hottestAge": "50대+",
-      "hottestDelta": 94
+      "hottestDelta": 95
     },
     {
       "keyword": "직업운",
@@ -52,14 +52,14 @@
           "recentAvg": 36.538455
         },
         "20대": {
-          "deltaPercent": 32,
+          "deltaPercent": 27,
           "level": 33,
           "recentAvg": 33.333325
         },
         "30대": {
-          "deltaPercent": 62,
-          "level": 25,
-          "recentAvg": 24.9999975
+          "deltaPercent": 52,
+          "level": 27,
+          "recentAvg": 26.5624975
         },
         "40대": {
           "deltaPercent": -44,
@@ -67,9 +67,9 @@
           "recentAvg": 14.4736775
         },
         "50대+": {
-          "deltaPercent": -52,
-          "level": 14,
-          "recentAvg": 13.636354999999998
+          "deltaPercent": 7,
+          "level": 21,
+          "recentAvg": 20.83333
         }
       },
       "hottestAge": "10대",
@@ -84,28 +84,28 @@
           "recentAvg": 0
         },
         "20대": {
-          "deltaPercent": 20,
+          "deltaPercent": 29,
           "level": 12,
           "recentAvg": 11.7647
         },
         "30대": {
-          "deltaPercent": 71,
+          "deltaPercent": 69,
           "level": 25,
           "recentAvg": 24.9999975
         },
         "40대": {
-          "deltaPercent": -2,
+          "deltaPercent": -3,
           "level": 29,
           "recentAvg": 28.9473625
         },
         "50대+": {
-          "deltaPercent": 18,
-          "level": 45,
-          "recentAvg": 45.454539999999994
+          "deltaPercent": 21,
+          "level": 42,
+          "recentAvg": 41.6666625
         }
       },
       "hottestAge": "30대",
-      "hottestDelta": 71
+      "hottestDelta": 69
     },
     {
       "keyword": "2026 운세",
@@ -113,27 +113,27 @@
         "10대": {
           "deltaPercent": 0,
           "level": 0,
-          "recentAvg": 0.006092499999999999
+          "recentAvg": 0.006589999999999999
         },
         "20대": {
           "deltaPercent": 0,
           "level": 0,
-          "recentAvg": 0.0224925
+          "recentAvg": 0.0219175
         },
         "30대": {
           "deltaPercent": 0,
           "level": 0,
-          "recentAvg": 0.028367499999999997
+          "recentAvg": 0.0284975
         },
         "40대": {
           "deltaPercent": 0,
           "level": 0,
-          "recentAvg": 0.02321
+          "recentAvg": 0.020499999999999997
         },
         "50대+": {
           "deltaPercent": 0,
           "level": 0,
-          "recentAvg": 0.02066
+          "recentAvg": 0.02073
         }
       },
       "hottestAge": null,
@@ -145,27 +145,27 @@
         "10대": {
           "deltaPercent": 0,
           "level": 0,
-          "recentAvg": 0.011695
+          "recentAvg": 0.011944999999999999
         },
         "20대": {
           "deltaPercent": 0,
           "level": 0,
-          "recentAvg": 0.0681525
+          "recentAvg": 0.06844
         },
         "30대": {
           "deltaPercent": 0,
           "level": 0,
-          "recentAvg": 0.05907
+          "recentAvg": 0.057515
         },
         "40대": {
           "deltaPercent": 0,
           "level": 0,
-          "recentAvg": 0.045365
+          "recentAvg": 0.04029749999999999
         },
         "50대+": {
           "deltaPercent": 0,
           "level": 0,
-          "recentAvg": 0.014724999999999999
+          "recentAvg": 0.017099999999999997
         }
       },
       "hottestAge": null,
@@ -177,7 +177,7 @@
         "10대": {
           "deltaPercent": 0,
           "level": 0,
-          "recentAvg": 0.0120675
+          "recentAvg": 0.01157
         },
         "20대": {
           "deltaPercent": 0,
@@ -187,53 +187,21 @@
         "30대": {
           "deltaPercent": 0,
           "level": 0,
-          "recentAvg": 0.045725
+          "recentAvg": 0.0477975
         },
         "40대": {
           "deltaPercent": 0,
           "level": 0,
-          "recentAvg": 0.036055000000000004
+          "recentAvg": 0.035347500000000004
         },
         "50대+": {
           "deltaPercent": 0,
           "level": 0,
-          "recentAvg": 0.011375
+          "recentAvg": 0.01284
         }
       },
       "hottestAge": null,
       "hottestDelta": 0
-    },
-    {
-      "keyword": "오늘의 운세",
-      "byAge": {
-        "10대": {
-          "deltaPercent": -37,
-          "level": 23,
-          "recentAvg": 22.79582
-        },
-        "20대": {
-          "deltaPercent": -9,
-          "level": 81,
-          "recentAvg": 80.95781249999999
-        },
-        "30대": {
-          "deltaPercent": -6,
-          "level": 89,
-          "recentAvg": 89.42488
-        },
-        "40대": {
-          "deltaPercent": -7,
-          "level": 86,
-          "recentAvg": 85.60136750000001
-        },
-        "50대+": {
-          "deltaPercent": -5,
-          "level": 92,
-          "recentAvg": 91.77817
-        }
-      },
-      "hottestAge": "50대+",
-      "hottestDelta": -5
     },
     {
       "keyword": "띠별 운세",
@@ -241,31 +209,63 @@
         "10대": {
           "deltaPercent": 0,
           "level": 3,
-          "recentAvg": 2.9673175
+          "recentAvg": 3.1967225
         },
         "20대": {
-          "deltaPercent": -7,
+          "deltaPercent": -6,
           "level": 12,
-          "recentAvg": 11.574177499999998
+          "recentAvg": 11.6960375
         },
         "30대": {
-          "deltaPercent": -6,
+          "deltaPercent": -4,
           "level": 19,
-          "recentAvg": 18.847379999999998
+          "recentAvg": 19.175395
         },
         "40대": {
-          "deltaPercent": -6,
-          "level": 19,
-          "recentAvg": 19.4289075
+          "deltaPercent": -3,
+          "level": 20,
+          "recentAvg": 19.906895
         },
         "50대+": {
-          "deltaPercent": -5,
+          "deltaPercent": -2,
           "level": 24,
-          "recentAvg": 24.109557499999998
+          "recentAvg": 24.441017499999997
         }
       },
       "hottestAge": "50대+",
-      "hottestDelta": -5
+      "hottestDelta": -2
+    },
+    {
+      "keyword": "오늘의 운세",
+      "byAge": {
+        "10대": {
+          "deltaPercent": -29,
+          "level": 25,
+          "recentAvg": 24.99066
+        },
+        "20대": {
+          "deltaPercent": -7,
+          "level": 82,
+          "recentAvg": 82.2192
+        },
+        "30대": {
+          "deltaPercent": -4,
+          "level": 91,
+          "recentAvg": 90.68239999999999
+        },
+        "40대": {
+          "deltaPercent": -5,
+          "level": 87,
+          "recentAvg": 86.9240775
+        },
+        "50대+": {
+          "deltaPercent": -4,
+          "level": 93,
+          "recentAvg": 92.5707325
+        }
+      },
+      "hottestAge": "30대",
+      "hottestDelta": -4
     }
   ],
   "limitations": [

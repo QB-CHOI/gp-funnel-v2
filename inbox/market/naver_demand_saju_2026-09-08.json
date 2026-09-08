@@ -1,8 +1,8 @@
 {
   "ok": true,
   "topic": "사주",
-  "date": "2026-09-05",
-  "generatedAt": "2026-09-04T23:51:31.537Z",
+  "date": "2026-09-08",
+  "generatedAt": "2026-09-08T00:38:12.417Z",
   "seeds": [
     "2026 운세",
     "신년운세",
@@ -852,321 +852,321 @@
   "keywords": [
     {
       "keyword": "오늘의운세",
-      "pcMonthly": 398100,
-      "mobileMonthly": 4974000,
-      "totalMonthly": 5372100,
+      "pcMonthly": 392700,
+      "mobileMonthly": 4959700,
+      "totalMonthly": 5352400,
       "competition": "높음",
       "isSeed": true
     },
     {
       "keyword": "운세",
-      "pcMonthly": 147000,
-      "mobileMonthly": 1669000,
-      "totalMonthly": 1816000,
+      "pcMonthly": 146000,
+      "mobileMonthly": 1670500,
+      "totalMonthly": 1816500,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "띠별운세",
-      "pcMonthly": 118900,
-      "mobileMonthly": 1257200,
-      "totalMonthly": 1376100,
+      "pcMonthly": 117400,
+      "mobileMonthly": 1255600,
+      "totalMonthly": 1373000,
       "competition": "높음",
       "isSeed": true
     },
     {
       "keyword": "별자리운세",
-      "pcMonthly": 77700,
+      "pcMonthly": 76900,
       "mobileMonthly": 745600,
-      "totalMonthly": 823300,
+      "totalMonthly": 822500,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "오늘운세",
-      "pcMonthly": 57800,
+      "pcMonthly": 58600,
       "mobileMonthly": 498000,
-      "totalMonthly": 555800,
+      "totalMonthly": 556600,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "사주",
-      "pcMonthly": 15500,
-      "mobileMonthly": 104300,
-      "totalMonthly": 119800,
+      "pcMonthly": 15300,
+      "mobileMonthly": 104100,
+      "totalMonthly": 119400,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "손없는날",
-      "pcMonthly": 17800,
-      "mobileMonthly": 87300,
-      "totalMonthly": 105100,
+      "pcMonthly": 17600,
+      "mobileMonthly": 87900,
+      "totalMonthly": 105500,
       "competition": "중간",
       "isSeed": false
     },
     {
       "keyword": "띠별오늘의운세",
-      "pcMonthly": 6000,
-      "mobileMonthly": 79600,
-      "totalMonthly": 85600,
+      "pcMonthly": 5930,
+      "mobileMonthly": 78800,
+      "totalMonthly": 84730,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "오늘띠별운세",
-      "pcMonthly": 5480,
+      "pcMonthly": 5460,
       "mobileMonthly": 53600,
-      "totalMonthly": 59080,
-      "competition": "높음",
-      "isSeed": false
-    },
-    {
-      "keyword": "쥐띠운세",
-      "pcMonthly": 12900,
-      "mobileMonthly": 39000,
-      "totalMonthly": 51900,
-      "competition": "높음",
-      "isSeed": false
-    },
-    {
-      "keyword": "돼지띠운세",
-      "pcMonthly": 12500,
-      "mobileMonthly": 39300,
-      "totalMonthly": 51800,
+      "totalMonthly": 59060,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "용띠운세",
-      "pcMonthly": 11900,
+      "pcMonthly": 11700,
       "mobileMonthly": 39800,
-      "totalMonthly": 51700,
+      "totalMonthly": 51500,
+      "competition": "높음",
+      "isSeed": false
+    },
+    {
+      "keyword": "쥐띠운세",
+      "pcMonthly": 12700,
+      "mobileMonthly": 38600,
+      "totalMonthly": 51300,
+      "competition": "높음",
+      "isSeed": false
+    },
+    {
+      "keyword": "돼지띠운세",
+      "pcMonthly": 12200,
+      "mobileMonthly": 39100,
+      "totalMonthly": 51300,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "닭띠운세",
-      "pcMonthly": 10900,
-      "mobileMonthly": 40000,
-      "totalMonthly": 50900,
+      "pcMonthly": 10700,
+      "mobileMonthly": 39800,
+      "totalMonthly": 50500,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "원숭이띠운세",
       "pcMonthly": 11400,
-      "mobileMonthly": 38600,
-      "totalMonthly": 50000,
-      "competition": "높음",
-      "isSeed": false
-    },
-    {
-      "keyword": "토끼띠운세",
-      "pcMonthly": 12300,
-      "mobileMonthly": 37600,
+      "mobileMonthly": 38500,
       "totalMonthly": 49900,
       "competition": "높음",
       "isSeed": false
     },
     {
+      "keyword": "토끼띠운세",
+      "pcMonthly": 12100,
+      "mobileMonthly": 37300,
+      "totalMonthly": 49400,
+      "competition": "높음",
+      "isSeed": false
+    },
+    {
       "keyword": "말띠운세",
-      "pcMonthly": 11500,
-      "mobileMonthly": 38000,
-      "totalMonthly": 49500,
+      "pcMonthly": 11300,
+      "mobileMonthly": 37900,
+      "totalMonthly": 49200,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "소띠운세",
-      "pcMonthly": 11600,
-      "mobileMonthly": 36900,
-      "totalMonthly": 48500,
+      "pcMonthly": 11500,
+      "mobileMonthly": 36700,
+      "totalMonthly": 48200,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "개띠운세",
-      "pcMonthly": 10800,
-      "mobileMonthly": 37500,
-      "totalMonthly": 48300,
-      "competition": "높음",
-      "isSeed": false
-    },
-    {
-      "keyword": "뱀띠운세",
-      "pcMonthly": 11900,
-      "mobileMonthly": 36400,
-      "totalMonthly": 48300,
-      "competition": "높음",
-      "isSeed": false
-    },
-    {
-      "keyword": "인터넷사주",
-      "pcMonthly": 5400,
-      "mobileMonthly": 42600,
+      "pcMonthly": 10700,
+      "mobileMonthly": 37300,
       "totalMonthly": 48000,
       "competition": "높음",
       "isSeed": false
     },
     {
+      "keyword": "뱀띠운세",
+      "pcMonthly": 11600,
+      "mobileMonthly": 36400,
+      "totalMonthly": 48000,
+      "competition": "높음",
+      "isSeed": false
+    },
+    {
+      "keyword": "인터넷사주",
+      "pcMonthly": 5290,
+      "mobileMonthly": 42600,
+      "totalMonthly": 47890,
+      "competition": "높음",
+      "isSeed": false
+    },
+    {
       "keyword": "오늘의띠별운세",
-      "pcMonthly": 3520,
-      "mobileMonthly": 43900,
-      "totalMonthly": 47420,
+      "pcMonthly": 3460,
+      "mobileMonthly": 43600,
+      "totalMonthly": 47060,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "양띠운세",
-      "pcMonthly": 11000,
-      "mobileMonthly": 33900,
-      "totalMonthly": 44900,
+      "pcMonthly": 10800,
+      "mobileMonthly": 33600,
+      "totalMonthly": 44400,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "꿈해몽풀이",
-      "pcMonthly": 1350,
+      "pcMonthly": 1360,
       "mobileMonthly": 34800,
-      "totalMonthly": 36150,
+      "totalMonthly": 36160,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "무료사주",
-      "pcMonthly": 5450,
-      "mobileMonthly": 30600,
+      "pcMonthly": 5350,
+      "mobileMonthly": 30700,
       "totalMonthly": 36050,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "식전영상",
-      "pcMonthly": 11000,
-      "mobileMonthly": 14100,
-      "totalMonthly": 25100,
+      "pcMonthly": 11100,
+      "mobileMonthly": 14700,
+      "totalMonthly": 25800,
       "competition": "중간",
       "isSeed": false
     },
     {
       "keyword": "원숭이띠",
-      "pcMonthly": 2070,
-      "mobileMonthly": 22500,
-      "totalMonthly": 24570,
+      "pcMonthly": 2020,
+      "mobileMonthly": 22400,
+      "totalMonthly": 24420,
+      "competition": "높음",
+      "isSeed": false
+    },
+    {
+      "keyword": "생년월일운세",
+      "pcMonthly": 3260,
+      "mobileMonthly": 21000,
+      "totalMonthly": 24260,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "물고기자리운세",
-      "pcMonthly": 7770,
-      "mobileMonthly": 16700,
-      "totalMonthly": 24470,
+      "pcMonthly": 7610,
+      "mobileMonthly": 16600,
+      "totalMonthly": 24210,
       "competition": "중간",
-      "isSeed": false
-    },
-    {
-      "keyword": "생년월일운세",
-      "pcMonthly": 3300,
-      "mobileMonthly": 21100,
-      "totalMonthly": 24400,
-      "competition": "높음",
-      "isSeed": false
-    },
-    {
-      "keyword": "물병자리운세",
-      "pcMonthly": 6800,
-      "mobileMonthly": 17100,
-      "totalMonthly": 23900,
-      "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "만세력사이트",
       "pcMonthly": 3200,
-      "mobileMonthly": 20300,
-      "totalMonthly": 23500,
+      "mobileMonthly": 20700,
+      "totalMonthly": 23900,
       "competition": "높음",
       "isSeed": false
     },
     {
-      "keyword": "MBTI궁합",
-      "pcMonthly": 2450,
-      "mobileMonthly": 20900,
-      "totalMonthly": 23350,
+      "keyword": "물병자리운세",
+      "pcMonthly": 6680,
+      "mobileMonthly": 17000,
+      "totalMonthly": 23680,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "삼재",
-      "pcMonthly": 3720,
-      "mobileMonthly": 19400,
-      "totalMonthly": 23120,
+      "pcMonthly": 3880,
+      "mobileMonthly": 19700,
+      "totalMonthly": 23580,
       "competition": "높음",
       "isSeed": true
     },
     {
+      "keyword": "MBTI궁합",
+      "pcMonthly": 2440,
+      "mobileMonthly": 20900,
+      "totalMonthly": 23340,
+      "competition": "높음",
+      "isSeed": false
+    },
+    {
       "keyword": "처녀자리운세",
-      "pcMonthly": 6600,
-      "mobileMonthly": 16000,
-      "totalMonthly": 22600,
+      "pcMonthly": 6560,
+      "mobileMonthly": 16600,
+      "totalMonthly": 23160,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "내일운세",
-      "pcMonthly": 1340,
+      "pcMonthly": 1310,
       "mobileMonthly": 21100,
-      "totalMonthly": 22440,
-      "competition": "높음",
-      "isSeed": false
-    },
-    {
-      "keyword": "전갈자리운세",
-      "pcMonthly": 6820,
-      "mobileMonthly": 15400,
-      "totalMonthly": 22220,
+      "totalMonthly": 22410,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "돼지띠",
-      "pcMonthly": 1990,
-      "mobileMonthly": 20000,
-      "totalMonthly": 21990,
+      "pcMonthly": 1960,
+      "mobileMonthly": 20300,
+      "totalMonthly": 22260,
+      "competition": "높음",
+      "isSeed": false
+    },
+    {
+      "keyword": "전갈자리운세",
+      "pcMonthly": 6710,
+      "mobileMonthly": 15300,
+      "totalMonthly": 22010,
+      "competition": "중간",
+      "isSeed": false
+    },
+    {
+      "keyword": "오늘에운세",
+      "pcMonthly": 450,
+      "mobileMonthly": 21100,
+      "totalMonthly": 21550,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "결혼",
-      "pcMonthly": 3310,
-      "mobileMonthly": 18500,
-      "totalMonthly": 21810,
-      "competition": "높음",
-      "isSeed": false
-    },
-    {
-      "keyword": "오늘에운세",
-      "pcMonthly": 470,
-      "mobileMonthly": 21200,
-      "totalMonthly": 21670,
-      "competition": "높음",
-      "isSeed": false
-    },
-    {
-      "keyword": "사자자리운세",
-      "pcMonthly": 6140,
-      "mobileMonthly": 15000,
-      "totalMonthly": 21140,
+      "pcMonthly": 3360,
+      "mobileMonthly": 18100,
+      "totalMonthly": 21460,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "내일의운세",
-      "pcMonthly": 1800,
-      "mobileMonthly": 18800,
-      "totalMonthly": 20600,
+      "pcMonthly": 1860,
+      "mobileMonthly": 18900,
+      "totalMonthly": 20760,
+      "competition": "높음",
+      "isSeed": false
+    },
+    {
+      "keyword": "말띠",
+      "pcMonthly": 2210,
+      "mobileMonthly": 18300,
+      "totalMonthly": 20510,
       "competition": "높음",
       "isSeed": false
     }
@@ -1174,65 +1174,57 @@
   "seedKeywords": [
     {
       "keyword": "오늘의운세",
-      "pcMonthly": 398100,
-      "mobileMonthly": 4974000,
-      "totalMonthly": 5372100,
+      "pcMonthly": 392700,
+      "mobileMonthly": 4959700,
+      "totalMonthly": 5352400,
       "competition": "높음",
       "isSeed": true
     },
     {
       "keyword": "띠별운세",
-      "pcMonthly": 118900,
-      "mobileMonthly": 1257200,
-      "totalMonthly": 1376100,
+      "pcMonthly": 117400,
+      "mobileMonthly": 1255600,
+      "totalMonthly": 1373000,
       "competition": "높음",
       "isSeed": true
     },
     {
       "keyword": "삼재",
-      "pcMonthly": 3720,
-      "mobileMonthly": 19400,
-      "totalMonthly": 23120,
+      "pcMonthly": 3880,
+      "mobileMonthly": 19700,
+      "totalMonthly": 23580,
       "competition": "높음",
       "isSeed": true
     },
     {
       "keyword": "사주풀이",
-      "pcMonthly": 2770,
-      "mobileMonthly": 10400,
-      "totalMonthly": 13170,
+      "pcMonthly": 2680,
+      "mobileMonthly": 10300,
+      "totalMonthly": 12980,
       "competition": "높음",
       "isSeed": true
     },
     {
       "keyword": "궁합",
-      "pcMonthly": 1880,
-      "mobileMonthly": 8040,
-      "totalMonthly": 9920,
+      "pcMonthly": 1830,
+      "mobileMonthly": 7990,
+      "totalMonthly": 9820,
       "competition": "높음",
       "isSeed": true
     },
     {
       "keyword": "신년운세",
-      "pcMonthly": 1150,
+      "pcMonthly": 1120,
       "mobileMonthly": 1940,
-      "totalMonthly": 3090,
+      "totalMonthly": 3060,
       "competition": "높음",
       "isSeed": true
     },
     {
       "keyword": "재물운",
-      "pcMonthly": 930,
-      "mobileMonthly": 1660,
-      "totalMonthly": 2590,
-      "competition": "높음",
-      "isSeed": true
-    },
-    {
-      "keyword": "애정운",
-      "pcMonthly": 750,
-      "mobileMonthly": 1010,
-      "totalMonthly": 1760,
+      "pcMonthly": 870,
+      "mobileMonthly": 1650,
+      "totalMonthly": 2520,
       "competition": "높음",
       "isSeed": true
     },
@@ -1245,42 +1237,50 @@
       "isSeed": true
     },
     {
+      "keyword": "애정운",
+      "pcMonthly": 710,
+      "mobileMonthly": 1020,
+      "totalMonthly": 1730,
+      "competition": "높음",
+      "isSeed": true
+    },
+    {
       "keyword": "2026운세",
       "pcMonthly": 150,
-      "mobileMonthly": 1080,
-      "totalMonthly": 1230,
+      "mobileMonthly": 1100,
+      "totalMonthly": 1250,
       "competition": "높음",
       "isSeed": true
     },
     {
       "keyword": "직업운",
-      "pcMonthly": 630,
-      "mobileMonthly": 190,
-      "totalMonthly": 820,
+      "pcMonthly": 590,
+      "mobileMonthly": 180,
+      "totalMonthly": 770,
       "competition": "높음",
       "isSeed": true
     },
     {
       "keyword": "결혼운",
-      "pcMonthly": 150,
+      "pcMonthly": 140,
       "mobileMonthly": 490,
-      "totalMonthly": 640,
+      "totalMonthly": 630,
       "competition": "높음",
       "isSeed": true
     },
     {
       "keyword": "사업운",
-      "pcMonthly": 60,
+      "pcMonthly": 70,
       "mobileMonthly": 170,
-      "totalMonthly": 230,
+      "totalMonthly": 240,
       "competition": "높음",
       "isSeed": true
     },
     {
       "keyword": "건강운",
       "pcMonthly": 10,
-      "mobileMonthly": 210,
-      "totalMonthly": 220,
+      "mobileMonthly": 220,
+      "totalMonthly": 230,
       "competition": "높음",
       "isSeed": true
     }
@@ -1288,264 +1288,264 @@
   "newDiscoveries": [
     {
       "keyword": "운세",
-      "pcMonthly": 147000,
-      "mobileMonthly": 1669000,
-      "totalMonthly": 1816000,
+      "pcMonthly": 146000,
+      "mobileMonthly": 1670500,
+      "totalMonthly": 1816500,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "별자리운세",
-      "pcMonthly": 77700,
+      "pcMonthly": 76900,
       "mobileMonthly": 745600,
-      "totalMonthly": 823300,
+      "totalMonthly": 822500,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "오늘운세",
-      "pcMonthly": 57800,
+      "pcMonthly": 58600,
       "mobileMonthly": 498000,
-      "totalMonthly": 555800,
+      "totalMonthly": 556600,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "사주",
-      "pcMonthly": 15500,
-      "mobileMonthly": 104300,
-      "totalMonthly": 119800,
+      "pcMonthly": 15300,
+      "mobileMonthly": 104100,
+      "totalMonthly": 119400,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "손없는날",
-      "pcMonthly": 17800,
-      "mobileMonthly": 87300,
-      "totalMonthly": 105100,
+      "pcMonthly": 17600,
+      "mobileMonthly": 87900,
+      "totalMonthly": 105500,
       "competition": "중간",
       "isSeed": false
     },
     {
       "keyword": "띠별오늘의운세",
-      "pcMonthly": 6000,
-      "mobileMonthly": 79600,
-      "totalMonthly": 85600,
+      "pcMonthly": 5930,
+      "mobileMonthly": 78800,
+      "totalMonthly": 84730,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "오늘띠별운세",
-      "pcMonthly": 5480,
+      "pcMonthly": 5460,
       "mobileMonthly": 53600,
-      "totalMonthly": 59080,
-      "competition": "높음",
-      "isSeed": false
-    },
-    {
-      "keyword": "쥐띠운세",
-      "pcMonthly": 12900,
-      "mobileMonthly": 39000,
-      "totalMonthly": 51900,
-      "competition": "높음",
-      "isSeed": false
-    },
-    {
-      "keyword": "돼지띠운세",
-      "pcMonthly": 12500,
-      "mobileMonthly": 39300,
-      "totalMonthly": 51800,
+      "totalMonthly": 59060,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "용띠운세",
-      "pcMonthly": 11900,
+      "pcMonthly": 11700,
       "mobileMonthly": 39800,
-      "totalMonthly": 51700,
+      "totalMonthly": 51500,
+      "competition": "높음",
+      "isSeed": false
+    },
+    {
+      "keyword": "쥐띠운세",
+      "pcMonthly": 12700,
+      "mobileMonthly": 38600,
+      "totalMonthly": 51300,
+      "competition": "높음",
+      "isSeed": false
+    },
+    {
+      "keyword": "돼지띠운세",
+      "pcMonthly": 12200,
+      "mobileMonthly": 39100,
+      "totalMonthly": 51300,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "닭띠운세",
-      "pcMonthly": 10900,
-      "mobileMonthly": 40000,
-      "totalMonthly": 50900,
+      "pcMonthly": 10700,
+      "mobileMonthly": 39800,
+      "totalMonthly": 50500,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "원숭이띠운세",
       "pcMonthly": 11400,
-      "mobileMonthly": 38600,
-      "totalMonthly": 50000,
-      "competition": "높음",
-      "isSeed": false
-    },
-    {
-      "keyword": "토끼띠운세",
-      "pcMonthly": 12300,
-      "mobileMonthly": 37600,
+      "mobileMonthly": 38500,
       "totalMonthly": 49900,
       "competition": "높음",
       "isSeed": false
     },
     {
+      "keyword": "토끼띠운세",
+      "pcMonthly": 12100,
+      "mobileMonthly": 37300,
+      "totalMonthly": 49400,
+      "competition": "높음",
+      "isSeed": false
+    },
+    {
       "keyword": "말띠운세",
-      "pcMonthly": 11500,
-      "mobileMonthly": 38000,
-      "totalMonthly": 49500,
+      "pcMonthly": 11300,
+      "mobileMonthly": 37900,
+      "totalMonthly": 49200,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "소띠운세",
-      "pcMonthly": 11600,
-      "mobileMonthly": 36900,
-      "totalMonthly": 48500,
+      "pcMonthly": 11500,
+      "mobileMonthly": 36700,
+      "totalMonthly": 48200,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "개띠운세",
-      "pcMonthly": 10800,
-      "mobileMonthly": 37500,
-      "totalMonthly": 48300,
-      "competition": "높음",
-      "isSeed": false
-    },
-    {
-      "keyword": "뱀띠운세",
-      "pcMonthly": 11900,
-      "mobileMonthly": 36400,
-      "totalMonthly": 48300,
-      "competition": "높음",
-      "isSeed": false
-    },
-    {
-      "keyword": "인터넷사주",
-      "pcMonthly": 5400,
-      "mobileMonthly": 42600,
+      "pcMonthly": 10700,
+      "mobileMonthly": 37300,
       "totalMonthly": 48000,
       "competition": "높음",
       "isSeed": false
     },
     {
+      "keyword": "뱀띠운세",
+      "pcMonthly": 11600,
+      "mobileMonthly": 36400,
+      "totalMonthly": 48000,
+      "competition": "높음",
+      "isSeed": false
+    },
+    {
+      "keyword": "인터넷사주",
+      "pcMonthly": 5290,
+      "mobileMonthly": 42600,
+      "totalMonthly": 47890,
+      "competition": "높음",
+      "isSeed": false
+    },
+    {
       "keyword": "오늘의띠별운세",
-      "pcMonthly": 3520,
-      "mobileMonthly": 43900,
-      "totalMonthly": 47420,
+      "pcMonthly": 3460,
+      "mobileMonthly": 43600,
+      "totalMonthly": 47060,
       "competition": "높음",
       "isSeed": false
     },
     {
       "keyword": "양띠운세",
-      "pcMonthly": 11000,
-      "mobileMonthly": 33900,
-      "totalMonthly": 44900,
+      "pcMonthly": 10800,
+      "mobileMonthly": 33600,
+      "totalMonthly": 44400,
       "competition": "높음",
       "isSeed": false
     }
   ],
   "communityDemand": {
     "enough": true,
-    "scanned": 1100,
-    "questionCount": 84,
-    "noiseFiltered": 1016,
+    "scanned": 1200,
+    "questionCount": 125,
+    "noiseFiltered": 1075,
     "hotSeeds": [
       {
+        "seed": "사업운",
+        "count": 26
+      },
+      {
         "seed": "결혼운",
-        "count": 33
+        "count": 23
       },
       {
         "seed": "신년운세",
-        "count": 14
+        "count": 20
       },
       {
-        "seed": "직업운",
-        "count": 10
+        "seed": "띠별 운세",
+        "count": 20
       },
       {
         "seed": "재물운",
-        "count": 7
-      },
-      {
-        "seed": "2026 운세",
-        "count": 6
+        "count": 18
       }
     ],
     "posts": [
       {
         "seed": "2026 운세",
-        "kind": "카페",
-        "title": "9월 5일 쌓아온 신용이 하루 만에 값을 하는 이 띠는? 오늘의 띠별 운세 총정....",
-        "link": "https://cafe.naver.com/praetorians/397587"
+        "kind": "지식iN",
+        "title": "운세사주 궁금합니다",
+        "link": "https://kin.naver.com/qna/detail.naver?dirId=31504&docId=495066896&answerNo=12"
       },
       {
         "seed": "신년운세",
         "kind": "지식iN",
-        "title": "신년사주 알려주세요~",
-        "link": "https://kin.naver.com/qna/detail.naver?dirId=31501&docId=490479287&answerNo=10"
-      },
-      {
-        "seed": "오늘의 운세",
-        "kind": "카페",
-        "title": "오늘의 운세, 정말 궁금한데… 무심코 봤다가 생긴 일",
-        "link": "https://cafe.naver.com/issuemoamoa/690"
+        "title": "신년운세 2026년 궁금합니다",
+        "link": "https://kin.naver.com/qna/detail.naver?dirId=31501&docId=492481754&answerNo=21"
       },
       {
         "seed": "띠별 운세",
         "kind": "지식iN",
-        "title": "이직 운세 궁금합니다 ..!",
-        "link": "https://kin.naver.com/qna/detail.naver?dirId=31504&docId=494899604&answerNo=13"
+        "title": "8월 13일 띠별 점심메뉴, 다른 분들은 뭐 드셨는지 궁금해요!",
+        "link": "https://kin.naver.com/qna/detail.naver?dirId=31504&docId=494735752&answerNo=7"
       },
       {
         "seed": "재물운",
         "kind": "카페",
-        "title": "재물운 직업운 궁금합니다 어떤 직업해여 될지",
-        "link": "https://cafe.naver.com/lovesaju/690698"
+        "title": "조상님 꿈 꿨다고 로또 사면 안 되는 이유? (진짜 재물운 꿈 해몽의 비밀)",
+        "link": "https://cafe.naver.com/uouv96/84287"
       },
       {
         "seed": "직업운",
         "kind": "카페",
-        "title": "직업운 잘 보는 곳 있을까요~~??",
-        "link": "https://cafe.naver.com/bamsaju/347336"
+        "title": "대운이 유리? 불리한지요? (직업운)",
+        "link": "https://cafe.naver.com/lovesaju/690924"
       },
       {
         "seed": "사업운",
-        "kind": "카페",
-        "title": "사업운, 재물복이 있나요",
-        "link": "https://cafe.naver.com/saju1379/191428"
+        "kind": "지식iN",
+        "title": "사업운 재물운 궁금합니다.",
+        "link": "https://kin.naver.com/qna/detail.naver?dirId=31501&docId=495047008&answerNo=20"
       },
       {
         "seed": "결혼운",
-        "kind": "지식iN",
-        "title": "결혼운 궁금합니다",
-        "link": "https://kin.naver.com/qna/detail.naver?dirId=31501&docId=495033883&answerNo=4"
+        "kind": "카페",
+        "title": "궁합이랑 결혼운 볼 때 뭘 물어봐야 할까요?",
+        "link": "https://cafe.naver.com/lifehackingstudy/119957"
       },
       {
         "seed": "2026 운세",
         "kind": "카페",
-        "title": "2026년 9월 4일 오늘의 운세 오.. 이 띠는 보면 좋을듯 ? 98년생 ?",
-        "link": "https://cafe.naver.com/btsdtoto/183742"
+        "title": "9월 8일 빌려준 것이 그대로 돌아오는 이 띠는? 오늘의 띠별 운세 총정리",
+        "link": "https://cafe.naver.com/praetorians/397650"
       },
       {
         "seed": "신년운세",
         "kind": "지식iN",
-        "title": "82년 개띠 신년운세가 궁금 하네요~^-^",
-        "link": "https://kin.naver.com/qna/detail.naver?dirId=31501&docId=490901066&answerNo=12"
+        "title": "신년운수 (월별운세)는 음력인가요 양력인가요?",
+        "link": "https://kin.naver.com/qna/detail.naver?dirId=315&docId=166300533&answerNo=3"
       },
       {
         "seed": "띠별 운세",
-        "kind": "카페",
-        "title": "9월 4일 남들이 손해라 여긴 자리에서 이문 남기는 '이 띠'는? | 오늘의 띠별 ....",
-        "link": "https://cafe.naver.com/praetorians/397555"
+        "kind": "지식iN",
+        "title": "9월 4일 띠별 점심메뉴, 주변 반응은 어때요?",
+        "link": "https://kin.naver.com/qna/detail.naver?dirId=31504&docId=495063343&answerNo=1"
       },
       {
         "seed": "재물운",
         "kind": "카페",
-        "title": "재물운 좋다는데 통장은 왜 조용할까요 ㅋㅋ",
-        "link": "https://cafe.naver.com/lifehackingstudy/119806"
+        "title": "돈다발받는꿈 재물운 변화가 궁금하다면",
+        "link": "https://cafe.naver.com/cafemakecafebest/90782"
+      },
+      {
+        "seed": "직업운",
+        "kind": "카페",
+        "title": "재물운 직업운 궁금합니다 어떤 직업해여 될지",
+        "link": "https://cafe.naver.com/lovesaju/690698"
       }
     ]
   },
