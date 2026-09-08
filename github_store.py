@@ -20,7 +20,7 @@ _SESSION = requests.Session()
 _SESSION.mount("https://", requests.adapters.HTTPAdapter(
     pool_connections=8, pool_maxsize=16))
 
-REPO           = "QB-CHOI/QB-CHOI-gp-funnel-v2"   # 코드 저장소 (public, 배포용)
+REPO           = "QB-CHOI/gp-funnel-v2"   # 코드 저장소 (public, 배포용)
 # 민감 데이터(매출·전환·인원)는 코드와 분리해 별도 private 저장소에 저장.
 # → 코드 저장소는 public 유지(Streamlit 배포 안정), 데이터는 외부 비공개.
 DATA_REPO      = "QB-CHOI/gp-funnel-data"
