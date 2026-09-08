@@ -247,7 +247,7 @@ def _kpi_band(items):
 
 # ── 사이드바 — 캐시 새로고침 ─────────────────────────────────────
 
-APP_VERSION = "v4.86"  # 배포 반영 확인용 — 화면 버전이 다르면 아직 리부팅 전
+APP_VERSION = "v4.87"  # 배포 반영 확인용 — 화면 버전이 다르면 아직 리부팅 전
 
 with st.sidebar:
     st.markdown("### 📊 황금후추 강의 분석")
@@ -340,6 +340,8 @@ if '_editing_room' not in st.session_state:
     st.session_state._editing_room = None
 if '_ocr_error' not in st.session_state:
     st.session_state._ocr_error = None
+if '_ocr_model' not in st.session_state:
+    st.session_state._ocr_model = ''
 if '_pending_archive' not in st.session_state:
     st.session_state['_pending_archive'] = None
 
@@ -1948,12 +1950,32 @@ def tab_input():
                 ocr_error = None
                 try:
                     if _ocr_engine == 'gemini':
-                        from gemini_vision import extract_members as _gemini_extract
+                        import gemini_vision
+                        from concurrent.futures import ThreadPoolExecutor
                         _gkey = st.secrets.get('gemini_api_key', '')
-                        for _, img in images:
-                            for r in _gemini_extract(img, _gkey, ROOMS):
+
+                        # 한 장에 9~26초가 걸린다(실측). 줄 세우면 넉 장에 100초다.
+                        # 서로 의존하지 않는 호출이라 동시에 보낸다 — 원격 CSV를
+                        # 동시에 받게 한 v4.82와 같은 이유다.
+                        # 한 장이 실패해도 나머지는 살린다. 스크린샷 넉 장 중
+                        # 하나가 흐렸다고 전부 버리면 사람이 다시 다 올려야 한다.
+                        def _one(item):
+                            try:
+                                return gemini_vision.extract_members(
+                                    item[1], _gkey, ROOMS), None
+                            except Exception as e:
+                                return [], f"{item[0]}: {e}"
+
+                        with ThreadPoolExecutor(max_workers=min(4, len(images))) as _ex:
+                            _outs = list(_ex.map(_one, images))
+                        for _rows, _ in _outs:          # 화면에 보인 순서대로 합친다
+                            for r in _rows:
                                 if r['room_num'] not in merged:
                                     merged[r['room_num']] = r['members']
+                        _errs = [e for _, e in _outs if e]
+                        if _errs:
+                            ocr_error = "\n".join(_errs)
+                        st.session_state._ocr_model = gemini_vision.LAST_MODEL
                     else:
                         for _, img in images:
                             for r in extract_from_image(img, ROOMS):
@@ -2010,8 +2032,11 @@ def tab_input():
                 st.warning(f"⚠️ {cnt}/{total_rn}개 인식 — 미인식 방은 전일 데이터로 채워집니다. 확인 후 수정하세요.")
             else:
                 st.error("❌ 채팅방을 하나도 인식하지 못했습니다. 이미지 품질을 확인하거나 직접 입력하세요.")
+            if st.session_state.get('_ocr_model'):
+                st.caption(f"🤖 {st.session_state._ocr_model}로 인식했습니다.")
             if st.session_state.get('_ocr_error'):
-                with st.expander("🔧 OCR 오류 상세"):
+                # 일부만 실패했어도 성공한 결과는 위에 이미 반영돼 있다.
+                with st.expander("🔧 인식 실패 상세 (모델·설정·응답 그대로)"):
                     st.code(st.session_state._ocr_error)
             if st.button("🔄 다시 인식"):
                 st.session_state.ocr_done = False

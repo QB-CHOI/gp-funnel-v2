@@ -33,6 +33,7 @@ _EXCLUDE = ("embedding", "aqa", "tts", "imagen", "veo", "image-generation",
             "live", "native-audio", "computer-use", "robotics")
 
 _MODEL_CACHE: dict = {}      # {api_key: [모델명, ...]} — 호출마다 목록을 받지 않도록
+LAST_MODEL = ""              # 마지막으로 성공한 모델. 화면에 띄워 다음 진단을 쉽게 한다
 
 
 def _rank(name: str) -> tuple:
@@ -82,21 +83,23 @@ def _encode_image(image: Image.Image) -> tuple[str, str]:
     return base64.b64encode(buf.getvalue()).decode(), "image/jpeg"
 
 
-def _call_model(model: str, img_b64: str, mime_type: str,
-                prompt: str, api_key: str, *, tuned: bool = True) -> dict:
+def _call_model(model: str, img_b64: str, mime_type: str, prompt: str,
+                api_key: str, *, json_mode: bool = True,
+                no_thinking: bool = True) -> dict:
     """단일 모델 호출. 응답 dict 반환, 실패 시 예외.
 
-    tuned=True면 두 가지를 요구한다:
-      thinkingBudget=0 — 최신 모델은 '생각'에 출력 토큰을 먼저 쓴다. 상한이
-        낮으면 생각만 하다 예산이 끝나 본문이 빈 채로 돌아온다(finishReason=
-        MAX_TOKENS). 읽어 옮기는 일에 생각은 필요 없다.
-      responseMimeType=application/json — 코드블록·설명 없이 JSON만 받는다.
-    옛 모델은 이 항목들을 모르고 400을 내므로, 그때는 tuned=False로 한 번 더
-    부른다(호출부에서 처리).
+    두 요구 사항을 각각 켜고 끌 수 있게 나눠 두었다. 묶어서 껐다 켰다 하면,
+    한쪽 때문에 400이 났을 때 멀쩡한 다른 쪽까지 같이 버리게 된다.
+      no_thinking — 최신 모델은 '생각'에 출력 토큰을 먼저 쓴다(실측: 한 장에
+        1,352토큰). 예전 상한 512로는 생각을 마치기도 전에 예산이 끝나 본문이
+        빈 채로 돌아왔다. 읽어 옮기는 일에 생각은 필요 없다. 다만 모델에 따라
+        이 설정 자체를 400으로 거부한다(gemini-3.6-flash 실측).
+      json_mode — 코드블록·설명 없이 JSON만 받는다.
     """
-    gen = {"temperature": 0.1, "maxOutputTokens": 4096}
-    if tuned:
+    gen = {"temperature": 0.1, "maxOutputTokens": 8192}
+    if json_mode:
         gen["responseMimeType"] = "application/json"
+    if no_thinking:
         gen["thinkingConfig"] = {"thinkingBudget": 0}
     body = {
         "contents": [{"parts": [
@@ -158,21 +161,27 @@ def extract_members(image: Image.Image, api_key: str, rooms: dict) -> list:
         "{\"results\": [{\"room_num\": 35, \"members\": 545}]}"
     )
 
+    # 설정을 하나씩 벗겨 가며 시도한다. 400은 '이 설정을 모른다'는 뜻이므로
+    # 다음 조합으로 넘어가고, 503(혼잡)·403(키) 같은 건 설정 문제가 아니라
+    # 같은 모델을 다시 불러 봐야 소용없다 — 바로 다음 모델로 간다.
+    _CONFIGS = [(True, True), (True, False), (False, False)]
     errors = []
     for model in _models(api_key):
-        for tuned in (True, False):     # 옛 모델은 tuned 항목을 모른다
+        for json_mode, no_thinking in _CONFIGS:
             try:
-                data = _call_model(model, img_b64, mime_type, prompt,
-                                   api_key, tuned=tuned)
+                data = _call_model(model, img_b64, mime_type, prompt, api_key,
+                                   json_mode=json_mode, no_thinking=no_thinking)
                 result = _parse_response(_text_of(data), rooms)
                 if result:
+                    global LAST_MODEL
+                    LAST_MODEL = model
                     return result
-                errors.append(f"{model}: 읽었으나 유효한 방이 없음")
-                break                   # 모델은 답했다. 설정을 바꿔 봐야 같다
+                errors.append(f"{model}: 읽었으나 등록된 방을 찾지 못함")
+                break                   # 모델은 답했다. 설정을 바꿔도 같다
             except Exception as e:
-                errors.append(f"{model}(tuned={tuned}): {e}")
-                if "400" not in str(e):
-                    break               # 설정 문제가 아니면 재시도 의미 없음
+                errors.append(f"{model}(json={json_mode},nothink={no_thinking}): {e}")
+                if "[400]" not in str(e):
+                    break               # 설정 문제가 아니면 조합을 바꿔도 같다
 
     # 한 모델이 죽어서 실패한 것인지, 키·할당량 문제인지 구분이 되어야
     # 사람이 다음에 무엇을 할지 안다. 시도한 모델 이름을 그대로 남긴다.
