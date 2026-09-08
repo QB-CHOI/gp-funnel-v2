@@ -1888,26 +1888,36 @@ def tab_input():
     st.subheader("1단계 — 스크린샷 업로드 (선택)")
     st.caption("📌 스크린샷 없이 아래 2단계에서 직접 입력해도 됩니다. 어제 값이 기본으로 채워져 있으니 바뀐 숫자만 수정하세요.")
 
-    # tesseract 실행 파일이 있어야 OCR이 의미가 있다. 없으면 업로더를 아예 감춘다 —
-    # 올려 봐야 '인식 0건'만 돌아오면 사람이 이유를 알 수 없다.
-    # (2026-09-08) Streamlit Cloud 서버 이미지에 수명이 끝난 데비안 11 저장소가 섞여
-    # apt 갱신이 실패했고, packages.txt가 있으면 배포 전체가 중단됐다. 사이트를 살리려
-    # packages.txt를 packages.txt.disabled로 떼어 둔 상태다. 이미지가 고쳐지면 되돌린다.
-    if shutil.which('tesseract'):
+    # 인식 엔진은 두 갈래다.
+    #   tesseract — apt 설치가 필요한데, 스트림릿 서버 이미지에 수명이 끝난
+    #               데비안 11 저장소가 섞여 apt 갱신 자체가 실패한다(2026-09-08).
+    #               packages.txt가 있으면 배포가 통째로 중단돼 떼어 둔 상태다.
+    #   gemini    — 순수 HTTP라 남의 서버 이미지 사정과 무관하다. 그래서 주 경로.
+    # 있는 쪽을 쓰고, 둘 다 없으면 업로더를 감춘다 — 올려 봐야 '인식 0건'만
+    # 돌아오면 사람이 이유를 알 수 없다.
+    _ocr_engine = ('tesseract' if shutil.which('tesseract')
+                   else ('gemini' if st.secrets.get('gemini_api_key', '') else None))
+
+    if _ocr_engine:
         uploaded_files = st.file_uploader(
             "이미지 파일 선택 (PNG / JPG) — 여러 장 동시 선택 가능",
             type=['png', 'jpg', 'jpeg'],
             accept_multiple_files=True,
             key='screenshot_upload',
         )
+        if _ocr_engine == 'gemini':
+            st.caption("🤖 제미나이 비전으로 인식합니다 — 배지 번호와 인원 수를 "
+                       "구분해 읽으므로 예전 방식보다 정확합니다.")
     else:
         uploaded_files = []
         st.warning(
-            "🔧 **스크린샷 자동 인식이 잠시 꺼져 있습니다.** Streamlit Cloud 서버 이미지의 "
-            "낡은 데비안 저장소 때문에 OCR 설치 단계에서 배포가 통째로 실패해, "
-            "사이트를 살리려고 OCR 패키지를 임시로 떼어 놓았습니다(2026-09-08). "
-            "**아래 2단계에서 숫자를 직접 입력**하시면 저장·집계는 평소와 똑같이 됩니다. "
-            "서버 이미지가 고쳐지면 자동 인식은 되돌립니다."
+            "🔧 **스크린샷 자동 인식이 꺼져 있습니다.** 스트림릿 서버 이미지의 낡은 "
+            "데비안 저장소 때문에 OCR 설치 단계에서 배포가 실패해, 사이트를 살리려고 "
+            "OCR 패키지를 떼어 놓았습니다(2026-09-08).\n\n"
+            "**되살리는 법** — [Google AI Studio](https://aistudio.google.com/apikey)에서 "
+            "무료 API 키를 받아, 앱 설정(**Manage app → Settings → Secrets**)에 "
+            "`gemini_api_key = \"받은키\"` 한 줄을 넣으면 제미나이 비전이 대신 인식합니다.\n\n"
+            "그때까지는 **아래 2단계에서 숫자를 직접 입력**하시면 저장·집계는 평소와 같습니다."
         )
 
     # 파일 목록이 바뀌면 OCR 상태 초기화
@@ -1937,10 +1947,18 @@ def tab_input():
                 merged = {}
                 ocr_error = None
                 try:
-                    for _, img in images:
-                        for r in extract_from_image(img, ROOMS):
-                            if r['room_num'] not in merged:
-                                merged[r['room_num']] = r['members']
+                    if _ocr_engine == 'gemini':
+                        from gemini_vision import extract_members as _gemini_extract
+                        _gkey = st.secrets.get('gemini_api_key', '')
+                        for _, img in images:
+                            for r in _gemini_extract(img, _gkey, ROOMS):
+                                if r['room_num'] not in merged:
+                                    merged[r['room_num']] = r['members']
+                    else:
+                        for _, img in images:
+                            for r in extract_from_image(img, ROOMS):
+                                if r['room_num'] not in merged:
+                                    merged[r['room_num']] = r['members']
                 except Exception as e:
                     ocr_error = str(e)
 
@@ -1951,9 +1969,11 @@ def tab_input():
                 # 실제로 237번방 4건이 이렇게 들어와 있었다(2026-08-13 정리).
                 # 방 번호는 순차 증가하므로 '현재 최대 + 10'을 상한으로 둔다.
                 _rn_max = (max(ROOMS) if ROOMS else 43) + 10
+                # 배지 탐지는 tesseract 전용 경로다(픽셀 좌표 기반).
+                # 제미나이일 때는 돌릴 것이 없어 건너뛴다.
                 badge_new, badge_junk = {}, set()
                 try:
-                    for _, img in images:
+                    for _, img in (images if _ocr_engine == 'tesseract' else []):
                         for rn, cnt_val in get_badge_rooms(img).items():
                             if rn in ROOMS or rn in badge_new:
                                 continue
