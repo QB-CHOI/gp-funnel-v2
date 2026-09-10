@@ -247,7 +247,7 @@ def _kpi_band(items):
 
 # ── 사이드바 — 캐시 새로고침 ─────────────────────────────────────
 
-APP_VERSION = "v4.87"  # 배포 반영 확인용 — 화면 버전이 다르면 아직 리부팅 전
+APP_VERSION = "v4.88"  # 배포 반영 확인용 — 화면 버전이 다르면 아직 리부팅 전
 
 with st.sidebar:
     st.markdown("### 📊 황금후추 강의 분석")
@@ -459,7 +459,10 @@ def _show_ocr_review(ocr_results: dict, rooms: dict, prev: dict):
 def _run_auth() -> bool:
     """Secrets에 app_password 가 있으면 비밀번호 게이트를 실행.
     없으면 즉시 True(통과) 반환 — 로컬 개발 시 자동 우회."""
-    pw_secret = st.secrets.get("app_password", "")
+    # 앞뒤 공백을 떼고 비교한다. Secrets 편집창에 비밀번호를 붙여넣을 때
+    # 줄바꿈이나 공백이 딸려 들어가는 일이 잦은데, 그러면 사람은 맞게 쳤는데도
+    # 영영 안 들어가진다 — 화면에는 '올바르지 않습니다'만 뜨니 원인을 알 수 없다.
+    pw_secret = str(st.secrets.get("app_password", "")).strip()
     if not pw_secret:
         return True
 
@@ -471,7 +474,7 @@ def _run_auth() -> bool:
     with st.form("login_form"):
         entered = st.text_input("비밀번호", type="password", placeholder="비밀번호를 입력하세요")
         if st.form_submit_button("로그인", type="primary", width='stretch'):
-            if entered == pw_secret:
+            if entered.strip() == pw_secret:
                 st.session_state["_authenticated"] = True
                 st.rerun()
             else:
