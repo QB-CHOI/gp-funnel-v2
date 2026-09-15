@@ -247,7 +247,7 @@ def _kpi_band(items):
 
 # ── 사이드바 — 캐시 새로고침 ─────────────────────────────────────
 
-APP_VERSION = "v4.88"  # 배포 반영 확인용 — 화면 버전이 다르면 아직 리부팅 전
+APP_VERSION = "v4.89"  # 배포 반영 확인용 — 화면 버전이 다르면 아직 리부팅 전
 
 with st.sidebar:
     st.markdown("### 📊 황금후추 강의 분석")
@@ -6895,6 +6895,8 @@ def tab_data():
         # 'rooms'는 나중에 추가된 컬럼이라 옛 기록엔 없다 — 있을 때만 붙인다.
         if str(_r0.get('rooms', '')).strip():
             _msg += f" · 방목록 {_r0['rooms']}"
+        if str(_r0.get('schedule', '')).strip():
+            _msg += f" · 강의 일정 {_r0['schedule']}"
         _al_st = str(_r0.get('alerts', '')).strip()
         if _al_st:
             _msg += f" · 슬랙 알림 {_al_st}"

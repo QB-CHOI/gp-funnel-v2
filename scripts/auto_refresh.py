@@ -275,6 +275,18 @@ def refresh_rooms(dry):
         return False
 
 
+def refresh_schedule(dry):
+    log("⑤ 강의 일정 캘린더 (구글 드라이브 시트)")
+    try:
+        from scripts.sync_schedule_from_drive import run
+        return run(dry)
+    except Exception as e:
+        # 일정은 부가 정보다 — 여기서 죽어도 방목록·알림은 계속 돌아야 한다.
+        log(f"  ⚠️ 일정 동기화 실패: {type(e).__name__}: {e}")
+        log(traceback.format_exc(limit=2))
+        return False
+
+
 # ── 5) 알림 발송 ─────────────────────────────────────────────
 def _webhook():
     """슬랙 웹훅 주소 — 앱과 같은 자리(.streamlit/secrets.toml)에서 읽는다."""
@@ -320,7 +332,7 @@ def send_alerts(dry):
     슬랙이 있으면 슬랙으로·없으면 맥 알림으로 보낸다. 어느 쪽이든 무엇을
     보냈는지 로그에 남긴다.
     """
-    log("⑤ 알림 점검")
+    log("⑥ 알림 점검")
     hook = _webhook()
     if not hook:
         log("  · 슬랙 웹훅 미설정 — 맥 알림으로 대신 보냅니다 "
@@ -389,7 +401,8 @@ def main():
     log("=" * 52)
     log(f"데이터 자동 갱신 시작{' (dry-run)' if a.dry_run else ''}")
     results = []
-    for fn in (refresh_market_signals, refresh_order_based, refresh_rooms):
+    for fn in (refresh_market_signals, refresh_order_based, refresh_rooms,
+               refresh_schedule):
         try:
             results.append(fn(a.dry_run))
         except Exception as e:
@@ -420,6 +433,7 @@ def main():
                 "market_signals": "갱신" if results[0] else "변경없음/실패",
                 "order_aggregates": "갱신" if results[1] else "변경없음/실패",
                 "rooms": "갱신" if results[2] else "변경없음/실패",
+                "schedule": "갱신" if results[3] else "변경없음/실패",
                 "changed": "예" if any(results) else "아니오",
                 "alerts": alert_status,
             }]), f"chore: 자동 갱신 상태 {st['last_run']}")

@@ -1110,7 +1110,7 @@ def load_refresh_status() -> pd.DataFrame:
     """
     return _read_csv(REFRESH_STATUS_PATH,
                      ['last_run', 'market_signals', 'order_aggregates',
-                      'rooms', 'changed', 'alerts'])
+                      'rooms', 'schedule', 'changed', 'alerts'])
 
 
 @st.cache_data(ttl=1800)
