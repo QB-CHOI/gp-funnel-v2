@@ -197,6 +197,7 @@ def _parse_order_upload(_bytes: bytes):
     import io as _io
     from scripts.refresh_order_aggregates import load_orders, build_all
     o = load_orders(_io.BytesIO(_bytes))
+    _paid = o[o['pay'] > 0]
     summary = {
         'rows': len(o),
         'paid': int((o['pay'] > 0).sum()),
@@ -204,8 +205,47 @@ def _parse_order_upload(_bytes: bytes):
         'revenue': int(o.loc[o['pay'] > 0, 'pay'].sum()),
         'first': o['d'].min(),
         'last': o['d'].max(),
+        # 상품군 구성 — 전체 내보내기인지 일부만 뽑은 파일인지 가르는 근거
+        'by_product': (_paid.groupby('product')
+                       .agg(건수=('pay', 'size'), 인원=('cust', 'nunique'),
+                            매출=('pay', 'sum'))
+                       .sort_values('매출', ascending=False)),
     }
     return summary, build_all(o)
+
+
+def _order_upload_scope(summary):
+    """전체 내보내기인지, 상품 몇 개만 뽑은 부분 파일인지 가른다.
+
+    부분 파일도 **열 구성이 전체와 똑같다.** 그대로 갱신하면 월매출·고객·
+    리텐션·전망이 그 몇 개 상품 값으로 통째로 덮인다. 게다가 마지막 주문일이
+    더 최신이라 기존의 '옛 파일인지 확인' 경고에도 걸리지 않는다
+    (2026-09 실측: 서적만 뽑은 파일 751건, 마지막 주문 09-15 > 기준일 07-19).
+    사람이 실수하기 딱 좋은 자리라, 통과시키지 않고 막는다.
+
+    반환: (전체로 보이는가, 그렇게 판단한 이유들)
+    """
+    bp = summary.get('by_product')
+    cats = {p for p in (bp.index if bp is not None else [])
+            if p not in ('기타', '서적')}
+    reasons = []
+    if len(cats) < 3:
+        reasons.append(
+            f"유료 상품군이 **{len(cats)}종**뿐입니다"
+            f"({', '.join(sorted(cats)) or '없음'}) — "
+            "전체 파일에는 사주·타로·부동산·빌딩이 모두 들어 있습니다.")
+    try:
+        mp = load_monthly_performance()
+        base_first = str(mp['month'].min()) if not mp.empty else ''
+    except Exception:
+        base_first = ''
+    up_first = (summary['first'].strftime('%Y-%m')
+                if pd.notna(summary.get('first')) else '')
+    if base_first and up_first and up_first > base_first:
+        reasons.append(
+            f"주문이 **{up_first}**부터 시작합니다 — "
+            f"지금 쌓인 자료는 {base_first}부터라 과거가 통째로 사라집니다.")
+    return (not reasons), reasons
 
 
 def _adspend_prorated(d1, d2):
@@ -247,7 +287,7 @@ def _kpi_band(items):
 
 # ── 사이드바 — 캐시 새로고침 ─────────────────────────────────────
 
-APP_VERSION = "v4.89"  # 배포 반영 확인용 — 화면 버전이 다르면 아직 리부팅 전
+APP_VERSION = "v4.90"  # 배포 반영 확인용 — 화면 버전이 다르면 아직 리부팅 전
 
 with st.sidebar:
     st.markdown("### 📊 황금후추 강의 분석")
@@ -7033,14 +7073,34 @@ def tab_data():
                                      .rename(columns={'month': '월', 'free_signups': '무료 신청',
                                                       'paid_orders': '유료 결제', 'conv_rate': '전환율(%)'}),
                                      hide_index=True)
-                    _ok_new = True
-                    if _ao_up and _newest <= _ao_up:
+                    # ── 부분 파일 차단 ───────────────────────────────
+                    _full, _why = _order_upload_scope(_sm)
+                    if not _full:
+                        st.warning(
+                            "⚠️ **일부 상품만 뽑은 파일로 보입니다.** 전체 집계 갱신은 "
+                            "막아 두었습니다 — 이 파일로 덮으면 여기 없는 상품의 매출·"
+                            "고객·리텐션이 **통째로 사라집니다.**")
+                        for _w in _why:
+                            st.caption(f"　· {_w}")
+                        st.markdown("**대신, 이 파일 안에서 본 결과입니다**")
+                        _bp = _sm['by_product'].copy()
+                        _bp['매출'] = _bp['매출'].map(lambda v: f"{int(v):,}원")
+                        _bp['건수'] = _bp['건수'].map(lambda v: f"{int(v):,}건")
+                        _bp['인원'] = _bp['인원'].map(lambda v: f"{int(v):,}명")
+                        st.dataframe(_bp, width='stretch')
+                        st.caption(
+                            "전체를 갱신하려면 아임웹에서 **상품을 고르지 말고** "
+                            "기간도 자르지 말고 내보낸 '강의별 리스트'를 올려주세요. "
+                            "그 파일 하나에 매출·전환·고객·지역 등 16종이 모두 들어 있습니다.")
+
+                    _ok_new = _full
+                    if _full and _ao_up and _newest <= _ao_up:
                         _ok_new = st.checkbox(
                             f"⚠️ 이 파일의 마지막 주문({_newest})이 현재 기준일({_ao_up})보다 "
                             "최신이 아닙니다. 예전 파일을 올린 게 아닌지 확인하세요. "
                             "그래도 이 파일로 덮어쓰기", key="ord_old_ok")
-                    if st.button("이 파일로 갱신하기", type="primary",
-                                 disabled=not _ok_new, key="ord_apply"):
+                    if _full and st.button("이 파일로 갱신하기", type="primary",
+                                           disabled=not _ok_new, key="ord_apply"):
                         _pb = st.progress(0.0, text="저장 준비 중…")
                         _n = len(_out)
 

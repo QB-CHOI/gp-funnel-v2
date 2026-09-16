@@ -369,6 +369,43 @@ def test_region_advice_carries_asof():
               "지역은 배송지 리포트에서 오므로 주문 업로드로 갱신되지 않는다")
 
 
+
+def test_partial_order_upload_blocked():
+    """일부 상품만 뽑은 주문 파일로 전체 집계를 덮지 못하게 (v4.90).
+
+    부분 파일도 열 구성이 전체와 똑같다. 그대로 갱신하면 그 파일에 없는
+    상품의 매출·고객·리텐션이 통째로 사라지는데, 마지막 주문일이 더 최신이라
+    기존의 '옛 파일' 경고에도 걸리지 않는다. 실제로 2026-09 서적 파일이
+    751건·마지막 주문 09-15로 기준일(07-19)보다 최신이었다.
+    """
+    import pandas as pd
+    import app
+
+    def _sm(cats, first):
+        idx = list(cats) or ['서적']
+        return {'first': pd.Timestamp(first), 'last': pd.Timestamp('2026-09-15'),
+                'by_product': pd.DataFrame(
+                    {'건수': [1] * len(idx), '인원': [1] * len(idx),
+                     '매출': [1] * len(idx)}, index=idx)}
+
+    full, why = app._order_upload_scope(_sm(['서적'], '2026-08-13'))
+    check("서적만 든 파일", full, False, "전체 갱신을 막아야 한다")
+    check("서적 파일 사유", len(why) >= 1, True, "왜 막혔는지 알려줘야 한다")
+
+    full, _ = app._order_upload_scope(_sm(['사주'], '2026-08-20'))
+    check("한 상품군만", full, False, "상품군 1종은 전체 파일이 아니다")
+
+    full, _ = app._order_upload_scope(_sm(['사주', '타로', '부동산', '빌딩'],
+                                          '2024-09-07'))
+    check("네 상품군 전체 기간", full, True, "정상 파일은 통과해야 한다")
+
+    # 상품군은 충분한데 기간이 잘린 파일 — 과거가 날아간다
+    full, why = app._order_upload_scope(_sm(['사주', '타로', '부동산', '빌딩'],
+                                            '2026-05-01'))
+    check("기간이 잘린 파일", full, False, "과거가 사라지는 파일도 막아야 한다")
+
+
+
 TESTS = [
     ("부분월 판정 (v4.70)", test_complete_months),
     ("웨비나 대기 분리 (v4.75)", test_lecture_date_split),
@@ -379,6 +416,7 @@ TESTS = [
     ("읽기 실패 → 쓰기 차단 (v4.83)", test_read_write_guard),
     ("웹훅 없이도 알림 발송 (v4.84)", test_alert_delivery_without_webhook),
     ("지역 조언 기준 시점 (v4.85)", test_region_advice_carries_asof),
+    ("부분 주문 파일 차단 (v4.90)", test_partial_order_upload_blocked),
 ]
 
 
