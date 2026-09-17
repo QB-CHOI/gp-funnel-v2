@@ -287,7 +287,7 @@ def _kpi_band(items):
 
 # ── 사이드바 — 캐시 새로고침 ─────────────────────────────────────
 
-APP_VERSION = "v4.97"  # 배포 반영 확인용 — 화면 버전이 다르면 아직 리부팅 전
+APP_VERSION = "v4.98"  # 배포 반영 확인용 — 화면 버전이 다르면 아직 리부팅 전
 
 with st.sidebar:
     st.markdown("### 📊 황금후추 강의 분석")
@@ -6652,7 +6652,11 @@ def tab_report():
             funnel_rows=None if _compact else _funnel_rows,
             archived_rows=None if _compact else (archived_report_rows or None),
             trend_series=_trend_series,
-            change_breakdown=None if _compact else _change_breakdown,
+            # 요약본에서도 반드시 넣는다. 이걸 빼면 헤드라인('+267명')만 남아
+            # '3개월 광고비 1.3억 쓰고 267명'으로 읽힌다 — 실제로 그렇게 읽으셨다.
+            # 그 267명은 방 5개를 정리하며 -3,573명이 빠진 결과이고, 모객 자체는
+            # +3,840명이었다. 헤드라인만 있는 보고서는 잘못된 판단을 부른다.
+            change_breakdown=_change_breakdown,
             trend_mark=_mark,
             strategy_rows=None if _compact else (_strategy_rows or None),
             product_master=None if _compact else _product_master,
