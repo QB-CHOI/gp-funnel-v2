@@ -287,7 +287,7 @@ def _kpi_band(items):
 
 # ── 사이드바 — 캐시 새로고침 ─────────────────────────────────────
 
-APP_VERSION = "v4.92"  # 배포 반영 확인용 — 화면 버전이 다르면 아직 리부팅 전
+APP_VERSION = "v4.93"  # 배포 반영 확인용 — 화면 버전이 다르면 아직 리부팅 전
 
 with st.sidebar:
     st.markdown("### 📊 황금후추 강의 분석")
@@ -6122,6 +6122,11 @@ def tab_report():
                                     key="report_to")
         period_label = f"{date_from} ~ {date_to}"
 
+    # 내려받기 버튼 자리를 화면 위쪽에 먼저 잡아 둔다. 내용은 아래에서
+    # 계산이 끝난 뒤 이 자리에 채운다 — 자주 쓰는 기능인데 탭이 길어
+    # 맨 아래에 있으면 못 찾는다(실제로 못 찾으셨다).
+    _dl_slot = st.container()
+
     df_period = df[(df['date'] >= date_from) & (df['date'] <= date_to)]
 
     if df_period.empty:
@@ -6571,11 +6576,12 @@ def tab_report():
         # 대표 보고용 한 장 요약. 부속 표(기수 비교·퍼널·종료방·전략·상품
         # 마스터·고객 전망)를 빼면 개요·KPI·추이·방별 표·인사이트만 남아
         # A4 한 장에 들어간다. 전체본이 필요한 자리도 있어 선택으로 둔다.
-        _compact = st.checkbox(
-            "📄 한 장 요약본으로 만들기 (대표 보고용)", value=True,
-            key="report_pdf_compact",
-            help="부속 표를 빼고 총원 추이·방별 증감·인사이트만 담습니다. "
-                 "끄면 기수 비교·퍼널 등 상세 표까지 모두 들어간 전체본이 됩니다.")
+        with _dl_slot:
+            _compact = st.checkbox(
+                "📄 한 장 요약본으로 만들기 (대표 보고용)", value=True,
+                key="report_pdf_compact",
+                help="부속 표를 빼고 총원 추이·방별 증감·인사이트만 담습니다. "
+                     "끄면 기수 비교·퍼널 등 상세 표까지 모두 들어간 전체본이 됩니다.")
 
         if _compact and len(perf_rows) > 7:
             _mid = perf_rows[3:-3]
@@ -6620,28 +6626,32 @@ def tab_report():
         _pdf_err = str(_e)
 
     _fname = f"채팅방_모객전환_보고서_{period_label.replace(' ', '_').replace('~', '-')}_{date.today()}"
-    dc1, dc2 = st.columns(2)
-    with dc1:
-        if _pdf_bytes:
+    # 위쪽에 잡아 둔 자리에 채운다(코드 순서는 여기지만 화면에는 기간 선택 바로 아래).
+    with _dl_slot:
+        dc1, dc2 = st.columns(2)
+        with dc1:
+            if _pdf_bytes:
+                st.download_button(
+                    label="📄 PDF 보고서 다운로드 (바로 출력용)",
+                    data=_pdf_bytes,
+                    file_name=f"{_fname}.pdf",
+                    mime="application/pdf",
+                    width='stretch',
+                    type="primary",
+                )
+            else:
+                st.button("📄 PDF 생성 실패", disabled=True, width='stretch')
+                st.caption(f"PDF 엔진 오류: {_pdf_err if '_pdf_err' in dir() else '알 수 없음'}")
+        with dc2:
             st.download_button(
-                label="📄 PDF 보고서 다운로드 (바로 출력용)",
-                data=_pdf_bytes,
-                file_name=f"{_fname}.pdf",
-                mime="application/pdf",
+                label="🖨️ HTML 보고서 (인터랙티브 차트)",
+                data=report_html.encode("utf-8"),
+                file_name=f"{_fname}.html",
+                mime="text/html",
                 width='stretch',
-                type="primary",
             )
-        else:
-            st.button("📄 PDF 생성 실패", disabled=True, width='stretch')
-            st.caption(f"PDF 엔진 오류: {_pdf_err if '_pdf_err' in dir() else '알 수 없음'}")
-    with dc2:
-        st.download_button(
-            label="🖨️ HTML 보고서 (인터랙티브 차트)",
-            data=report_html.encode("utf-8"),
-            file_name=f"{_fname}.html",
-            mime="text/html",
-            width='stretch',
-        )
+        st.caption("※ 기간을 바꾸면 위 파일도 함께 바뀝니다. "
+                   "아래로 내려가면 인사이트·방별 성과·광고비 내역을 화면에서 볼 수 있습니다.")
 
 
 # ── 탭 4: 채팅방 설정 ────────────────────────────────────────────
