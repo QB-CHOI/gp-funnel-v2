@@ -406,6 +406,33 @@ def test_partial_order_upload_blocked():
 
 
 
+
+def test_cpa_denominator_excludes_closed_rooms():
+    """1명당 광고비 분모에서 '방 종료로 상쇄된 순증감'을 쓰지 않는다 (v4.99).
+
+    강의를 마친 방을 닫은 기간에는 총원 순증감이 구조적으로 눌린다. 그걸
+    분모로 쓰면 단가가 폭등한 것처럼 보인다 — 실측(최근 3개월): 광고비
+    132,333,333원 ÷ 순증감 267명 = 495,630원/명. 실제 모객 3,840명 기준으로는
+    34,462원이다. 14배 차이라 그대로 보고되면 판단이 뒤집힌다.
+    """
+    spend, diff, active = 132333333, 267, 3840
+
+    def cpa(breakdown):
+        base = diff
+        if (breakdown and breakdown.get('archived_removed', 0) < 0
+                and breakdown.get('active_change', 0) > 0):
+            base = breakdown['active_change']
+        return round(spend / base) if base > 0 else None
+
+    check("종료 방 있을 때", cpa({'archived_removed': -3573, 'active_change': active}),
+          34462, "실제 모객으로 나눠야 한다")
+    check("종료 방 없을 때", cpa(None), round(spend / diff),
+          "종료가 없으면 순증감이 곧 모객이다")
+    check("분해는 있지만 종료 없음", cpa({'archived_removed': 0, 'active_change': 100}),
+          round(spend / diff), "구조적 감소가 없으면 바꾸지 않는다")
+
+
+
 TESTS = [
     ("부분월 판정 (v4.70)", test_complete_months),
     ("웨비나 대기 분리 (v4.75)", test_lecture_date_split),
@@ -417,6 +444,7 @@ TESTS = [
     ("웹훅 없이도 알림 발송 (v4.84)", test_alert_delivery_without_webhook),
     ("지역 조언 기준 시점 (v4.85)", test_region_advice_carries_asof),
     ("부분 주문 파일 차단 (v4.90)", test_partial_order_upload_blocked),
+    ("1명당 광고비 분모 (v4.99)", test_cpa_denominator_excludes_closed_rooms),
 ]
 
 

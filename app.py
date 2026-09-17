@@ -287,7 +287,7 @@ def _kpi_band(items):
 
 # ── 사이드바 — 캐시 새로고침 ─────────────────────────────────────
 
-APP_VERSION = "v4.98"  # 배포 반영 확인용 — 화면 버전이 다르면 아직 리부팅 전
+APP_VERSION = "v4.99"  # 배포 반영 확인용 — 화면 버전이 다르면 아직 리부팅 전
 
 with st.sidebar:
     st.markdown("### 📊 황금후추 강의 분석")
@@ -6227,6 +6227,17 @@ def tab_report():
     )
     # 방별 광고비 수기 입력은 비어 있어도 전사 월별 광고비는 쌓여 있다.
     # '없음'만 띄우면 광고를 안 돌린 것처럼 읽히므로 출처를 밝혀 대체 표시한다.
+    # 1명당 광고비의 분모. 순증감(diff)을 그대로 쓰면 강의를 마친 방을 닫은
+    # 기간에 단가가 폭등한 것처럼 보인다 — 최근 3개월 실측에서 132,333,333원을
+    # 267명으로 나눠 495,630원/명이 나왔다(실제 모객 3,840명 기준 34,462원).
+    # 종료 방을 뺀 '운영 중 방 자연 증감'이 있으면 그것을 분모로 쓴다.
+    _cpa_base = diff
+    _cpa_label = "인원 1명당"
+    if (_change_breakdown and _change_breakdown.get('archived_removed', 0) < 0
+            and _change_breakdown.get('active_change', 0) > 0):
+        _cpa_base = _change_breakdown['active_change']
+        _cpa_label = "모객 1명당(종료 방 제외)"
+
     _co_spend, _co_have, _co_miss = (0, [], [])
     if period_spend == 0:
         _co_spend, _co_have, _co_miss = _adspend_prorated(first_date, last_date)
@@ -6234,13 +6245,13 @@ def tab_report():
         k3.metric(
             "광고비 집행",
             f"{period_spend:,}원",
-            f"CPM {round(period_spend/diff):,}원/명" if diff > 0 else None,
+            f"{_cpa_label} {round(period_spend/_cpa_base):,}원" if _cpa_base > 0 else None,
         )
     elif _co_spend > 0:
         k3.metric(
             "전사 광고비(기간 안분)",
             f"{_co_spend:,}원",
-            f"인원 1명당 {round(_co_spend/diff):,}원" if diff > 0 else None,
+            f"{_cpa_label} {round(_co_spend/_cpa_base):,}원" if _cpa_base > 0 else None,
             delta_color="off",
             help="방별 광고비 수기 입력이 없어 **월별 전사 광고비**를 일수로 나눠 배분한 값입니다. "
                  "이 방들만의 광고비가 아니라 전 상품 합계라 참고용입니다.",
@@ -6631,7 +6642,7 @@ def tab_report():
             _pdf_spend_note = ("전 상품 합계를 일수로 배분"
                                + (f" · {'·'.join(_co_miss)} 미입력" if _co_miss else ""))
         elif period_spend and diff > 0:
-            _pdf_spend_note = f"인원 1명당 {round(period_spend/diff):,}원"
+            _pdf_spend_note = f"{_cpa_label} {round(period_spend/_cpa_base):,}원"
         if _has_budget and _pdf_spend_note:
             # 예산이 섞인 값을 실집행처럼 읽으면 ROAS 판단이 통째로 어긋난다.
             _pdf_spend_note += " · 예산 포함"
