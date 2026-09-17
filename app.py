@@ -287,7 +287,7 @@ def _kpi_band(items):
 
 # ── 사이드바 — 캐시 새로고침 ─────────────────────────────────────
 
-APP_VERSION = "v4.91"  # 배포 반영 확인용 — 화면 버전이 다르면 아직 리부팅 전
+APP_VERSION = "v4.92"  # 배포 반영 확인용 — 화면 버전이 다르면 아직 리부팅 전
 
 with st.sidebar:
     st.markdown("### 📊 황금후추 강의 분석")
@@ -6564,21 +6564,56 @@ def tab_report():
                 }
         except Exception:
             _customer_forecast = None
+        # 한 장에 담으려면 방 표가 8행을 넘으면 안 된다(실측). 그렇다고 뒤를
+        # 잘라 버리면 감소한 방이 통째로 사라져 '다 늘었다'로 읽힌다 —
+        # 증가·감소 양 끝을 남기고 가운데만 합계 한 줄로 접는다.
+        _perf_pdf = perf_rows
+        # 대표 보고용 한 장 요약. 부속 표(기수 비교·퍼널·종료방·전략·상품
+        # 마스터·고객 전망)를 빼면 개요·KPI·추이·방별 표·인사이트만 남아
+        # A4 한 장에 들어간다. 전체본이 필요한 자리도 있어 선택으로 둔다.
+        _compact = st.checkbox(
+            "📄 한 장 요약본으로 만들기 (대표 보고용)", value=True,
+            key="report_pdf_compact",
+            help="부속 표를 빼고 총원 추이·방별 증감·인사이트만 담습니다. "
+                 "끄면 기수 비교·퍼널 등 상세 표까지 모두 들어간 전체본이 됩니다.")
+
+        if _compact and len(perf_rows) > 7:
+            _mid = perf_rows[3:-3]
+            _msum = sum(int(r.get('_change', 0)) for r in _mid)
+            _perf_pdf = perf_rows[:3] + [{
+                '채팅방': f'그 외 {len(_mid)}개 방 합계', '현재 인원': '',
+                '증감': f'{_msum:+,}명', '증감률': '', '평가': '요약',
+                '_change': _msum,
+            }] + perf_rows[-3:]
+
+        # 안분값이 일부 월만 덮으면 '광고비가 줄었다'로 오독된다 — 화면과 같이 밝힌다.
+        _pdf_spend_note = ""
+        if not period_spend and _co_spend:
+            _pdf_spend_note = ("전 상품 합계를 일수로 배분"
+                               + (f" · {'·'.join(_co_miss)} 미입력" if _co_miss else ""))
+        elif period_spend and diff > 0:
+            _pdf_spend_note = f"인원 1명당 {round(period_spend/diff):,}원"
         _pdf_bytes = generate_pdf_report(
             period_label=period_label,
             first_date=str(first_date), last_date=str(last_date),
             total_now=total_now, diff=diff, pct=pct,
-            period_spend=period_spend, conv_rate=conv_rate,
-            insight_lines=insight_lines, perf_rows=perf_rows,
-            comparison_rows=_comparison_rows or None,
-            funnel_rows=_funnel_rows,
-            archived_rows=archived_report_rows or None,
+            period_spend=(period_spend or _co_spend),
+            spend_label=("광고비 집행" if period_spend else
+                         ("전사 광고비(기간 안분)" if _co_spend else "광고비 집행")),
+            spend_note=_pdf_spend_note,
+            conv_rate=conv_rate,
+            conv_note=("" if conv_rate else "방별 신청·수강확정 수기 입력 기준"),
+            compact=_compact,
+            insight_lines=insight_lines, perf_rows=_perf_pdf,
+            comparison_rows=None if _compact else (_comparison_rows or None),
+            funnel_rows=None if _compact else _funnel_rows,
+            archived_rows=None if _compact else (archived_report_rows or None),
             trend_series=_trend_series,
-            change_breakdown=_change_breakdown,
+            change_breakdown=None if _compact else _change_breakdown,
             trend_mark=_mark,
-            strategy_rows=_strategy_rows or None,
-            product_master=_product_master,
-            customer_forecast=_customer_forecast,
+            strategy_rows=None if _compact else (_strategy_rows or None),
+            product_master=None if _compact else _product_master,
+            customer_forecast=None if _compact else _customer_forecast,
         )
     except Exception as _e:
         _pdf_bytes = None

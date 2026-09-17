@@ -222,6 +222,7 @@ def generate_pdf_report(
     period_label, first_date, last_date,
     total_now, diff, pct, period_spend, conv_rate,
     insight_lines, perf_rows,
+    spend_label="광고비 집행", spend_note="", conv_note="", compact=False,
     comparison_rows=None, funnel_rows=None, archived_rows=None,
     trend_series=None, change_breakdown=None, trend_mark=None,
     strategy_rows=None, product_master=None, customer_forecast=None,
@@ -234,8 +235,11 @@ def generate_pdf_report(
 
     PW, PH = A4
     LM = RM = 17 * mm
-    TM = 26 * mm
-    BM = 16 * mm
+    # compact = 대표 보고용 한 장 요약. 여백·섹션 간격·차트 높이를 줄여
+    # 개요·KPI·추이·방별 표·인사이트가 A4 한 장에 들어가게 한다.
+    TM = (20 if compact else 26) * mm
+    BM = (12 if compact else 16) * mm
+    _G = 8 if compact else 14        # 주요 섹션 사이 간격
     content_w = PW - LM - RM
 
     # ── 머리말/꼬리말 (전 페이지) ──
@@ -268,6 +272,15 @@ def generate_pdf_report(
 
     S = []  # story
 
+    # 섹션 번호는 고정값이 아니라 **실제로 그린 순서**로 매긴다.
+    # 자료가 없어 한 섹션이 빠지면(요약본은 퍼널을 뺀다) 번호가 2→4로 튀어서
+    # 받는 사람이 '빠진 장이 있나' 하고 의심하게 된다.
+    _seq = [0]
+
+    def _sn():
+        _seq[0] += 1
+        return _seq[0]
+
     # ── 표제부 ──
     S.append(Paragraph("채팅방 모객 · 전환 분석 보고서", styles["title"]))
     S.append(Spacer(1, 3))
@@ -286,15 +299,18 @@ def generate_pdf_report(
         ("BACKGROUND", (0, 0), (0, -1), NAVY), ("BACKGROUND", (2, 0), (2, -1), NAVY),
         ("GRID", (0, 0), (-1, -1), 0.6, LINE),
         ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
-        ("TOPPADDING", (0, 0), (-1, -1), 5), ("BOTTOMPADDING", (0, 0), (-1, -1), 5),
+        ("TOPPADDING", (0, 0), (-1, -1), (3 if compact else 5)),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), (3 if compact else 5)),
         ("LEFTPADDING", (0, 0), (-1, -1), 7),
     ]))
 
     aw = content_w * 0.30
+    # 요약본은 결재란 서명 칸을 낮춘다(칸은 남긴다 — 보고서 양식이라 필요하다).
     approval = Table(
         [[Paragraph("담당", styles["cell_h"]), Paragraph("팀장", styles["cell_h"]), Paragraph("임원", styles["cell_h"])],
          ["", "", ""]],
-        colWidths=[aw/3]*3, rowHeights=[7*mm, 15*mm])
+        colWidths=[aw/3]*3,
+        rowHeights=[(6 if compact else 7)*mm, (10 if compact else 15)*mm])
     approval.setStyle(TableStyle([
         ("BACKGROUND", (0, 0), (-1, 0), NAVY),
         ("GRID", (0, 0), (-1, -1), 0.6, LINE),
@@ -306,7 +322,7 @@ def generate_pdf_report(
                               ("LEFTPADDING", (1, 0), (1, 0), 10),
                               ("RIGHTPADDING", (0, 0), (-1, -1), 0)]))
     S.append(head)
-    S.append(Spacer(1, 14))
+    S.append(Spacer(1, _G))
 
     # ── 1. 보고 개요 ──
     sign = "+" if diff >= 0 else ""
@@ -334,7 +350,7 @@ def generate_pdf_report(
             f"유료 등록 <b>{_fmt(tot_e)}명</b>으로 이어져 평균 전환율 <b>{avg_c:.1f}%</b>, "
             f"등록 매출 <b>{_fmt(tot_r)}원</b>을 기록하였습니다."
         )
-    S.append(_section_header(1, "보고 개요", styles, content_w))
+    S.append(_section_header(_sn(), "보고 개요", styles, content_w))
     S.append(Spacer(1, 6))
     box = Table([[Paragraph(summary, styles["body"])]], colWidths=[content_w])
     box.setStyle(TableStyle([
@@ -344,10 +360,10 @@ def generate_pdf_report(
         ("LINEBEFORE", (0, 0), (0, -1), 3, GOLD),
     ]))
     S.append(box)
-    S.append(Spacer(1, 14))
+    S.append(Spacer(1, _G))
 
     # ── 2. 주요 성과 지표 ──
-    S.append(_section_header(2, "주요 성과 지표", styles, content_w))
+    S.append(_section_header(_sn(), "주요 성과 지표", styles, content_w))
     S.append(Spacer(1, 6))
 
     def _kpi_cell(label, value, delta="", dcolor=INK_SOFT):
@@ -367,8 +383,13 @@ def generate_pdf_report(
     k_cells = [
         _kpi_cell("현재 총 인원", f"{_fmt(total_now)}명", f"{sign}{_fmt(diff)}명 ({sign}{pct:.1f}%)", dcol),
         _kpi_cell("기간 순증감", f"{sign}{_fmt(diff)}명", f"{first_date}~{last_date}", INK_SOFT),
-        _kpi_cell("광고비 집행", (f"{_fmt(period_spend)}원" if period_spend else "-"), "", INK_SOFT),
-        _kpi_cell("수강 전환율", (f"{conv_rate}%" if conv_rate else "-"), "강의 신청 기준" if conv_rate else "", INK_SOFT),
+        # 방별 광고비가 비어 있으면 화면과 똑같이 '전사 광고비(기간 안분)'로
+        # 라벨을 바꿔 넣는다. 출처가 다른 값을 같은 이름으로 적으면 안 되지만,
+        # 빈칸으로 두면 '광고를 안 썼다'로 읽히는 것도 사실이 아니다.
+        _kpi_cell(spend_label, (f"{_fmt(period_spend)}원" if period_spend else "-"),
+                  spend_note, INK_SOFT),
+        _kpi_cell("수강 전환율", (f"{conv_rate}%" if conv_rate else "-"),
+                  (conv_note or ("강의 신청 기준" if conv_rate else "")), INK_SOFT),
     ]
     kpi = Table([k_cells], colWidths=[(content_w) / 4] * 4)
     kpi.setStyle(TableStyle([
@@ -404,13 +425,14 @@ def generate_pdf_report(
         S.append(Spacer(1, 10))
         S.append(Paragraph("기간 총원 추이", styles["h3"]))
         S.append(Spacer(1, 3))
-        S.append(TrendLine(trend_series, content_w, mark=trend_mark))
-    S.append(Spacer(1, 14))
+        S.append(TrendLine(trend_series, content_w,
+                           height=(56 if compact else 88), mark=trend_mark))
+    S.append(Spacer(1, _G))
 
     # ── 2-1. 총원 변동 원인 분석 (감소 사유 명시) ──
     if change_breakdown and change_breakdown.get("archived_removed", 0) < 0:
         bd = change_breakdown
-        blk = [_section_header("2-1", "총원 변동 원인 분석", styles, content_w), Spacer(1, 5),
+        blk = [_section_header(f"{_seq[0]}-1", "총원 변동 원인 분석", styles, content_w), Spacer(1, 5),
                Paragraph("헤드라인 총원 변동을 ‘운영 중 방의 자연 증감’과 ‘강의 완료에 따른 방 종료(구조적)’로 "
                          "분해하여, 실제 운영 상태를 정확히 판단할 수 있도록 하였습니다.", styles["body_s"]),
                Spacer(1, 7)]
@@ -453,12 +475,12 @@ def generate_pdf_report(
             "▪ 시사점 : 총원 감소의 대부분은 강의 사이클 완료에 따른 계획된 방 종료이며, "
             "이는 오픈채팅 운영의 정상적 수명주기입니다. 다음 기수 모객 시에는 종료 방의 전환 "
             "성과를 참고하여 전환율 높은 상품군을 우선 편성하는 전략이 유효합니다.", note))
-        blk.append(Spacer(1, 14))
+        blk.append(Spacer(1, _G))
         S.append(KeepTogether(blk))
 
     # ── 3. 모객 → 유료 전환 분석 ──
     if funnel_rows:
-        block = [_section_header(3, "모객 → 유료 전환 분석", styles, content_w), Spacer(1, 4),
+        block = [_section_header(_sn(), "모객 → 유료 전환 분석", styles, content_w), Spacer(1, 4),
                  Paragraph("무료 웨비나 방 인원이 실제 유료 등록으로 이어진 비율입니다. (입문 강의 기준)", styles["body_s"]),
                  Spacer(1, 6), ConversionBars(funnel_rows, content_w), Spacer(1, 8)]
         # 표
@@ -476,12 +498,12 @@ def generate_pdf_report(
         tf = Table(rf, colWidths=[content_w*0.26, content_w*0.20, content_w*0.16, content_w*0.14, content_w*0.24])
         tf.setStyle(_table_style())
         block.append(tf)
-        block.append(Spacer(1, 14))
+        block.append(Spacer(1, _G))
         S.append(KeepTogether(block))
 
     # ── 4. 채팅방별 운영 현황 ──
     if perf_rows:
-        S.append(_section_header(4, "채팅방별 운영 현황", styles, content_w))
+        S.append(_section_header(_sn(), "채팅방별 운영 현황", styles, content_w))
         S.append(Spacer(1, 6))
         hp = [Paragraph(h, styles["cell_h"]) for h in ["채팅방", "현재 인원", "기간 증감", "증감률", "추세"]]
         rp = [hp]
@@ -496,13 +518,13 @@ def generate_pdf_report(
                 Paragraph(r.get("평가", ""), styles["cell_r"]),
             ])
         tp = Table(rp, colWidths=[content_w*0.36, content_w*0.18, content_w*0.18, content_w*0.16, content_w*0.12])
-        tp.setStyle(_table_style())
+        tp.setStyle(_table_style(compact))
         S.append(tp)
-        S.append(Spacer(1, 14))
+        S.append(Spacer(1, _G))
 
     # ── 5. 종합 인사이트 및 시사점 ──
     if insight_lines:
-        block = [_section_header(5, "종합 인사이트 및 시사점", styles, content_w), Spacer(1, 6)]
+        block = [_section_header(_sn(), "종합 인사이트 및 시사점", styles, content_w), Spacer(1, 6)]
         for ln in insight_lines:
             txt = ln
             # **볼드** → <b>
@@ -515,7 +537,7 @@ def generate_pdf_report(
 
     # ── 강의 사업 종합 전략 요약 ──
     if strategy_rows or product_master:
-        block = [_section_header(6, "강의 사업 종합 전략 요약", styles, content_w), Spacer(1, 6)]
+        block = [_section_header(_sn(), "강의 사업 종합 전략 요약", styles, content_w), Spacer(1, 6)]
         if strategy_rows:
             for _title, _body in strategy_rows:
                 _b = _body
@@ -577,7 +599,7 @@ def generate_pdf_report(
 
     # ── 부록: 운영 종료 채팅방 ──
     if archived_rows:
-        S.append(_section_header(7, "[부록] 운영 종료 채팅방 현황", styles, content_w))
+        S.append(_section_header(_sn(), "[부록] 운영 종료 채팅방 현황", styles, content_w))
         S.append(Spacer(1, 6))
         ha = [Paragraph(h, styles["cell_h"]) for h in ["채팅방", "종료일", "최종 인원", "최고 인원", "순증감", "운영기간"]]
         ra = [ha]
@@ -601,13 +623,16 @@ def generate_pdf_report(
     return buf.getvalue()
 
 
-def _table_style():
+def _table_style(compact=False):
+    """compact면 행 여백을 줄인다 — 방이 11개면 위아래 5pt씩만으로도 120pt를
+    먹어서, 한 장 요약본의 인사이트가 다음 장으로 밀린다."""
+    _p = 2 if compact else 5
     return TableStyle([
         ("BACKGROUND", (0, 0), (-1, 0), NAVY),
         ("GRID", (0, 0), (-1, -1), 0.5, LINE),
         ("ROWBACKGROUNDS", (0, 1), (-1, -1), [WHITE, BG_SOFT]),
         ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
-        ("TOPPADDING", (0, 0), (-1, -1), 5), ("BOTTOMPADDING", (0, 0), (-1, -1), 5),
+        ("TOPPADDING", (0, 0), (-1, -1), _p), ("BOTTOMPADDING", (0, 0), (-1, -1), _p),
         ("LEFTPADDING", (0, 0), (-1, -1), 7), ("RIGHTPADDING", (0, 0), (-1, -1), 7),
     ])
 
