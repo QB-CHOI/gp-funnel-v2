@@ -426,7 +426,7 @@ def generate_pdf_report(
         S.append(Paragraph("기간 총원 추이", styles["h3"]))
         S.append(Spacer(1, 3))
         S.append(TrendLine(trend_series, content_w,
-                           height=(56 if compact else 88), mark=trend_mark))
+                           height=(46 if compact else 88), mark=trend_mark))
     S.append(Spacer(1, _G))
 
     # ── 2-1. 총원 변동 원인 분석 (감소 사유 명시) ──
@@ -501,30 +501,43 @@ def generate_pdf_report(
         block.append(Spacer(1, _G))
         S.append(KeepTogether(block))
 
-    # ── 4. 채팅방별 운영 현황 ──
+    # ── 채팅방별 운영 현황 ──
+    # 요약본에서는 인사이트를 **먼저** 놓는다. 방을 하나도 빼지 않고 다 적으면
+    # (방이 11~16개다) 표가 한 장을 넘기는데, 그때 결론이 뒤로 밀리면 첫 장만
+    # 보는 사람이 아무것도 못 얻는다. 요약이 앞, 상세가 뒤가 맞다.
+    _perf_block = []
     if perf_rows:
-        S.append(_section_header(_sn(), "채팅방별 운영 현황", styles, content_w))
-        S.append(Spacer(1, 6))
-        hp = [Paragraph(h, styles["cell_h"]) for h in ["채팅방", "현재 인원", "기간 증감", "증감률", "추세"]]
+        _perf_block.append(Spacer(1, 6))
+        # 요약본은 방을 하나도 빼지 않고 다 적는다 — 대표 보고의 핵심이
+        # '어느 방이 얼마나 늘고 줄었나'라서, 묶어 버리면 볼 이유가 없어진다.
+        # 대신 글자·줄간격을 줄여 한 장 안에 밀어 넣는다.
+        if compact:
+            _c  = ParagraphStyle("cell_c", parent=styles["cell"], fontSize=7.8, leading=9.6)
+            _cr = ParagraphStyle("cell_rc", parent=styles["cell_r"], fontSize=7.8, leading=9.6)
+            _ch = ParagraphStyle("cell_hc", parent=styles["cell_h"], fontSize=7.8, leading=9.6)
+        else:
+            _c, _cr, _ch = styles["cell"], styles["cell_r"], styles["cell_h"]
+        hp = [Paragraph(h, _ch) for h in ["채팅방", "현재 인원", "기간 증감", "증감률", "추세"]]
         rp = [hp]
         for r in perf_rows:
             chg = r.get("_change", 0)
             col = GOOD if chg > 0 else (CRIT if chg < 0 else INK_SOFT)
             rp.append([
-                Paragraph(str(r.get("채팅방", "")), styles["cell"]),
-                Paragraph(str(r.get("현재 인원", "")), styles["cell_r"]),
-                Paragraph(f'<font color="#{col.hexval()[2:]}">{r.get("증감","")}</font>', styles["cell_r"]),
-                Paragraph(f'<font color="#{col.hexval()[2:]}">{r.get("증감률","")}</font>', styles["cell_r"]),
-                Paragraph(r.get("평가", ""), styles["cell_r"]),
+                Paragraph(str(r.get("채팅방", "")), _c),
+                Paragraph(str(r.get("현재 인원", "")), _cr),
+                Paragraph(f'<font color="#{col.hexval()[2:]}">{r.get("증감","")}</font>', _cr),
+                Paragraph(f'<font color="#{col.hexval()[2:]}">{r.get("증감률","")}</font>', _cr),
+                Paragraph(r.get("평가", ""), _cr),
             ])
         tp = Table(rp, colWidths=[content_w*0.36, content_w*0.18, content_w*0.18, content_w*0.16, content_w*0.12])
         tp.setStyle(_table_style(compact))
-        S.append(tp)
-        S.append(Spacer(1, _G))
+        _perf_block.append(tp)
+        _perf_block.append(Spacer(1, _G))
 
-    # ── 5. 종합 인사이트 및 시사점 ──
+    # ── 종합 인사이트 및 시사점 ──
+    _insight_block = []
     if insight_lines:
-        block = [_section_header(_sn(), "종합 인사이트 및 시사점", styles, content_w), Spacer(1, 6)]
+        block = [Spacer(1, 6)]
         for ln in insight_lines:
             txt = ln
             # **볼드** → <b>
@@ -532,8 +545,20 @@ def generate_pdf_report(
             txt = "".join(p if i % 2 == 0 else f"<b>{p}</b>" for i, p in enumerate(parts))
             block.append(Paragraph(f"• {txt}", styles["bullet"]))
             block.append(Spacer(1, 3))
-        S.append(KeepTogether(block))
-        S.append(Spacer(1, 8))
+        _insight_block = [KeepTogether(block), Spacer(1, 8)]
+
+    # 요약본: 인사이트 → 방별 표.  전체본: 방별 표 → 인사이트(기존 순서).
+    # 번호는 **붙이는 시점**에 매긴다 — 순서가 바뀌어도 1,2,3…으로 이어진다.
+    _ordered = ([("종합 인사이트 및 시사점", _insight_block),
+                 ("채팅방별 운영 현황", _perf_block)] if compact else
+                [("채팅방별 운영 현황", _perf_block),
+                 ("종합 인사이트 및 시사점", _insight_block)])
+    for _title, _blk in _ordered:
+        if not _blk:
+            continue
+        S.append(_section_header(_sn(), _title, styles, content_w))
+        for _f in _blk:
+            S.append(_f)
 
     # ── 강의 사업 종합 전략 요약 ──
     if strategy_rows or product_master:
@@ -618,6 +643,11 @@ def generate_pdf_report(
         ta = Table(ra, colWidths=[content_w*0.26, content_w*0.16, content_w*0.15, content_w*0.15, content_w*0.14, content_w*0.14])
         ta.setStyle(_table_style())
         S.append(ta)
+
+    # 끝에 남은 여백이 페이지를 하나 더 만들어 '머리말만 있는 빈 장'이 붙는다.
+    # 대표에게 나가는 문서라 빈 장은 그 자체로 흠이다 — 꼬리 여백을 떼고 만든다.
+    while S and isinstance(S[-1], Spacer):
+        S.pop()
 
     doc.build(S)
     return buf.getvalue()

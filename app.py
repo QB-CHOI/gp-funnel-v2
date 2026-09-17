@@ -287,7 +287,7 @@ def _kpi_band(items):
 
 # ── 사이드바 — 캐시 새로고침 ─────────────────────────────────────
 
-APP_VERSION = "v4.93"  # 배포 반영 확인용 — 화면 버전이 다르면 아직 리부팅 전
+APP_VERSION = "v4.94"  # 배포 반영 확인용 — 화면 버전이 다르면 아직 리부팅 전
 
 with st.sidebar:
     st.markdown("### 📊 황금후추 강의 분석")
@@ -6583,14 +6583,6 @@ def tab_report():
                 help="부속 표를 빼고 총원 추이·방별 증감·인사이트만 담습니다. "
                      "끄면 기수 비교·퍼널 등 상세 표까지 모두 들어간 전체본이 됩니다.")
 
-        if _compact and len(perf_rows) > 7:
-            _mid = perf_rows[3:-3]
-            _msum = sum(int(r.get('_change', 0)) for r in _mid)
-            _perf_pdf = perf_rows[:3] + [{
-                '채팅방': f'그 외 {len(_mid)}개 방 합계', '현재 인원': '',
-                '증감': f'{_msum:+,}명', '증감률': '', '평가': '요약',
-                '_change': _msum,
-            }] + perf_rows[-3:]
 
         # 안분값이 일부 월만 덮으면 '광고비가 줄었다'로 오독된다 — 화면과 같이 밝힌다.
         _pdf_spend_note = ""
