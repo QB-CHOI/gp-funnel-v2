@@ -287,7 +287,7 @@ def _kpi_band(items):
 
 # ── 사이드바 — 캐시 새로고침 ─────────────────────────────────────
 
-APP_VERSION = "v4.96"  # 배포 반영 확인용 — 화면 버전이 다르면 아직 리부팅 전
+APP_VERSION = "v4.97"  # 배포 반영 확인용 — 화면 버전이 다르면 아직 리부팅 전
 
 with st.sidebar:
     st.markdown("### 📊 황금후추 강의 분석")
@@ -6601,6 +6601,30 @@ def tab_report():
                      "끄면 기수 비교·퍼널 등 상세 표까지 모두 들어간 전체본이 됩니다.")
 
 
+        # 월별 광고비 — 기간에 걸친 달을 그대로 보고서에 싣는다.
+        # 예산만 잡힌 달(실집행 미확정)은 구분해 적는다.
+        _ad_rows, _has_budget = [], False
+        try:
+            _adm = load_ad_spend_monthly()
+            if not _adm.empty:
+                _want = [str(p) for p in pd.period_range(
+                    pd.Timestamp(first_date).to_period('M'),
+                    pd.Timestamp(last_date).to_period('M'), freq='M')]
+                for _m in _want:
+                    _sub = _adm[_adm['month'].astype(str) == _m]
+                    if _sub.empty:
+                        _ad_rows.append({'월': ganji.ym_label(_m, with_ganji=False),
+                                         '광고비': '미입력', '구분': '—'})
+                        continue
+                    _amt = int(_sub['spend'].sum())
+                    _bud = _sub['memo'].astype(str).str.contains('예산').any()
+                    _has_budget = _has_budget or _bud
+                    _ad_rows.append({'월': ganji.ym_label(_m, with_ganji=False),
+                                     '광고비': f"{_amt:,}원",
+                                     '구분': '예산(계획)' if _bud else '실집행'})
+        except Exception:
+            _ad_rows = []
+
         # 안분값이 일부 월만 덮으면 '광고비가 줄었다'로 오독된다 — 화면과 같이 밝힌다.
         _pdf_spend_note = ""
         if not period_spend and _co_spend:
@@ -6608,6 +6632,9 @@ def tab_report():
                                + (f" · {'·'.join(_co_miss)} 미입력" if _co_miss else ""))
         elif period_spend and diff > 0:
             _pdf_spend_note = f"인원 1명당 {round(period_spend/diff):,}원"
+        if _has_budget and _pdf_spend_note:
+            # 예산이 섞인 값을 실집행처럼 읽으면 ROAS 판단이 통째로 어긋난다.
+            _pdf_spend_note += " · 예산 포함"
         _pdf_bytes = generate_pdf_report(
             period_label=period_label,
             first_date=str(first_date), last_date=str(last_date),
@@ -6620,6 +6647,7 @@ def tab_report():
             conv_note=("" if conv_rate else "방별 신청·수강확정 수기 입력 기준"),
             compact=_compact,
             insight_lines=insight_lines, perf_rows=_perf_pdf,
+            adspend_rows=_ad_rows or None,
             comparison_rows=None if _compact else (_comparison_rows or None),
             funnel_rows=None if _compact else _funnel_rows,
             archived_rows=None if _compact else (archived_report_rows or None),

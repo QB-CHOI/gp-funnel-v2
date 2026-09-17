@@ -223,6 +223,7 @@ def generate_pdf_report(
     total_now, diff, pct, period_spend, conv_rate,
     insight_lines, perf_rows,
     spend_label="광고비 집행", spend_note="", conv_note="", compact=False,
+    adspend_rows=None,
     comparison_rows=None, funnel_rows=None, archived_rows=None,
     trend_series=None, change_breakdown=None, trend_mark=None,
     strategy_rows=None, product_master=None, customer_forecast=None,
@@ -356,11 +357,12 @@ def generate_pdf_report(
     box.setStyle(TableStyle([
         ("BACKGROUND", (0, 0), (-1, -1), BG_SOFT),
         ("LEFTPADDING", (0, 0), (-1, -1), 12), ("RIGHTPADDING", (0, 0), (-1, -1), 12),
-        ("TOPPADDING", (0, 0), (-1, -1), 10), ("BOTTOMPADDING", (0, 0), (-1, -1), 10),
+        ("TOPPADDING", (0, 0), (-1, -1), (6 if compact else 10)),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), (6 if compact else 10)),
         ("LINEBEFORE", (0, 0), (0, -1), 3, GOLD),
     ]))
     S.append(box)
-    S.append(Spacer(1, _G))
+    S.append(Spacer(1, (5 if compact else _G)))
 
     # ── 2. 주요 성과 지표 ──
     S.append(_section_header(_sn(), "주요 성과 지표", styles, content_w))
@@ -426,8 +428,18 @@ def generate_pdf_report(
         S.append(Paragraph("기간 총원 추이", styles["h3"]))
         S.append(Spacer(1, 3))
         S.append(TrendLine(trend_series, content_w,
-                           height=(46 if compact else 88), mark=trend_mark))
+                           height=(40 if compact else 88), mark=trend_mark))
     S.append(Spacer(1, _G))
+
+    # 요약본은 월별 광고비를 '지표' 아래 한 줄로 붙인다. 섹션으로 떼면 머리글
+    # 하나에 30pt 넘게 들어 방 표가 다음 장으로 밀린다 — 한 줄이면 공짜다.
+    if adspend_rows and compact:
+        _adtxt = " · ".join(
+            f"{r.get('월','')} <b>{r.get('광고비','')}</b>"
+            + (f"({r.get('구분')})" if r.get('구분') and r.get('구분') != '실집행' else "")
+            for r in adspend_rows)
+        S.append(Paragraph(f"월별 광고비 &nbsp;{_adtxt}", styles["body_s"]))
+        S.append(Spacer(1, 4))
 
     # ── 2-1. 총원 변동 원인 분석 (감소 사유 명시) ──
     if change_breakdown and change_breakdown.get("archived_removed", 0) < 0:
@@ -501,6 +513,26 @@ def generate_pdf_report(
         block.append(Spacer(1, _G))
         S.append(KeepTogether(block))
 
+    # ── 월별 광고비 ──
+    # 총액 한 칸만 보여 주면 '어느 달에 얼마 썼나'를 알 수 없다. 기간에 걸친
+    # 달을 그대로 펼친다. 예산만 잡히고 실집행이 확정되지 않은 달은 구분해
+    # 적는다 — 섞어 놓으면 나중에 ROAS가 왜 틀렸는지 아무도 모른다.
+    _ad_block = []
+    if adspend_rows and not compact:
+        _ad_block.append(Spacer(1, 6))
+        _hd = [Paragraph(h, styles["cell_h"]) for h in ["월", "광고비", "구분"]]
+        _rows = [_hd]
+        for r in adspend_rows:
+            _rows.append([
+                Paragraph(str(r.get("월", "")), styles["cell"]),
+                Paragraph(str(r.get("광고비", "")), styles["cell_r"]),
+                Paragraph(str(r.get("구분", "")), styles["cell_r"]),
+            ])
+        _t = Table(_rows, colWidths=[content_w*0.30, content_w*0.40, content_w*0.30])
+        _t.setStyle(_table_style(compact))
+        _ad_block.append(_t)
+        _ad_block.append(Spacer(1, _G))
+
     # ── 채팅방별 운영 현황 ──
     # 요약본에서는 인사이트를 **먼저** 놓는다. 방을 하나도 빼지 않고 다 적으면
     # (방이 11~16개다) 표가 한 장을 넘기는데, 그때 결론이 뒤로 밀리면 첫 장만
@@ -512,9 +544,9 @@ def generate_pdf_report(
         # '어느 방이 얼마나 늘고 줄었나'라서, 묶어 버리면 볼 이유가 없어진다.
         # 대신 글자·줄간격을 줄여 한 장 안에 밀어 넣는다.
         if compact:
-            _c  = ParagraphStyle("cell_c", parent=styles["cell"], fontSize=7.8, leading=9.6)
-            _cr = ParagraphStyle("cell_rc", parent=styles["cell_r"], fontSize=7.8, leading=9.6)
-            _ch = ParagraphStyle("cell_hc", parent=styles["cell_h"], fontSize=7.8, leading=9.6)
+            _c  = ParagraphStyle("cell_c", parent=styles["cell"], fontSize=7.4, leading=8.9)
+            _cr = ParagraphStyle("cell_rc", parent=styles["cell_r"], fontSize=7.4, leading=8.9)
+            _ch = ParagraphStyle("cell_hc", parent=styles["cell_h"], fontSize=7.4, leading=8.9)
         else:
             _c, _cr, _ch = styles["cell"], styles["cell_r"], styles["cell_h"]
         hp = [Paragraph(h, _ch) for h in ["채팅방", "현재 인원", "기간 증감", "증감률", "추세"]]
@@ -544,14 +576,16 @@ def generate_pdf_report(
             parts = txt.split("**")
             txt = "".join(p if i % 2 == 0 else f"<b>{p}</b>" for i, p in enumerate(parts))
             block.append(Paragraph(f"• {txt}", styles["bullet"]))
-            block.append(Spacer(1, 3))
+            block.append(Spacer(1, (1 if compact else 3)))
         _insight_block = [KeepTogether(block), Spacer(1, 8)]
 
     # 요약본: 인사이트 → 방별 표.  전체본: 방별 표 → 인사이트(기존 순서).
     # 번호는 **붙이는 시점**에 매긴다 — 순서가 바뀌어도 1,2,3…으로 이어진다.
-    _ordered = ([("종합 인사이트 및 시사점", _insight_block),
+    _ordered = ([("월별 광고비 집행", _ad_block),
+                 ("종합 인사이트 및 시사점", _insight_block),
                  ("채팅방별 운영 현황", _perf_block)] if compact else
-                [("채팅방별 운영 현황", _perf_block),
+                [("월별 광고비 집행", _ad_block),
+                 ("채팅방별 운영 현황", _perf_block),
                  ("종합 인사이트 및 시사점", _insight_block)])
     for _title, _blk in _ordered:
         if not _blk:
