@@ -287,7 +287,7 @@ def _kpi_band(items):
 
 # ── 사이드바 — 캐시 새로고침 ─────────────────────────────────────
 
-APP_VERSION = "v4.95"  # 배포 반영 확인용 — 화면 버전이 다르면 아직 리부팅 전
+APP_VERSION = "v4.96"  # 배포 반영 확인용 — 화면 버전이 다르면 아직 리부팅 전
 
 with st.sidebar:
     st.markdown("### 📊 황금후추 강의 분석")
@@ -5989,11 +5989,18 @@ def _generate_insight(df_period, rooms, period_label,
             )
 
     # 방별 증감 분석
-    room_changes = {}
+    #
+    # **현재 운영 중인 방만 센다.** 기간이 길면 그 사이 운영이 끝난 방의
+    # 데이터도 들어 있는데(최근 3개월이면 5개), 그것까지 세면 화면·보고서의
+    # 방별 표(현재 운영 방만 나온다)와 숫자가 어긋난다 — 실제로 표에는 11개가
+    # 있는데 인사이트는 '4개 증가 · 12개 감소'(=16개)라고 적혀 나갔다.
+    # 종료된 방은 지우지 않고 아래에서 따로 한 줄로 밝힌다.
+    room_changes, ended_changes = {}, {}
     for rn in df_period['room_num'].unique():
         rdf = df_period[df_period['room_num'] == rn].sort_values('date')
         if len(rdf) >= 2:
-            room_changes[int(rn)] = int(rdf.iloc[-1]['members']) - int(rdf.iloc[0]['members'])
+            _ch = int(rdf.iloc[-1]['members']) - int(rdf.iloc[0]['members'])
+            (room_changes if int(rn) in rooms else ended_changes)[int(rn)] = _ch
 
     if room_changes:
         top_rn  = max(room_changes, key=room_changes.get)
@@ -6016,7 +6023,16 @@ def _generate_insight(df_period, rooms, period_label,
         n_down = sum(1 for v in room_changes.values() if v < 0)
         n_flat = len(room_changes) - n_up - n_down
         lines.append(
-            f"채팅방 {n_up}개 증가 · {n_down}개 감소 · {n_flat}개 유지."
+            f"운영 중인 채팅방 {n_up}개 증가 · {n_down}개 감소 · {n_flat}개 유지."
+        )
+
+    # 기간 중 문 닫은 방 — 표에는 없지만 총원 추이에는 종료 시점까지 들어 있다.
+    # 밝히지 않으면 '표를 더해도 총원이 안 맞는다'는 의문만 남는다.
+    if ended_changes:
+        _es = sum(ended_changes.values())
+        lines.append(
+            f"기간 중 운영이 끝난 채팅방 **{len(ended_changes)}개**(합계 {_es:+,}명)는 "
+            "위 집계와 아래 표에서 뺐습니다 — 총원 추이에는 종료 시점까지 포함돼 있습니다."
         )
 
     # 광고비
