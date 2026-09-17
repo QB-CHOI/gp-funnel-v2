@@ -287,7 +287,7 @@ def _kpi_band(items):
 
 # ── 사이드바 — 캐시 새로고침 ─────────────────────────────────────
 
-APP_VERSION = "v4.90"  # 배포 반영 확인용 — 화면 버전이 다르면 아직 리부팅 전
+APP_VERSION = "v4.91"  # 배포 반영 확인용 — 화면 버전이 다르면 아직 리부팅 전
 
 with st.sidebar:
     st.markdown("### 📊 황금후추 강의 분석")
@@ -6085,7 +6085,8 @@ def tab_report():
     # ── 기간 선택 ───────────────────────────────────────────────
     period = st.radio(
         "보고 기간",
-        ["이번 주", "이번 달", "최근 3개월", "전체", "직접 설정"],
+        ["이번 주", "이번 달", "최근 1개월", "최근 2개월", "최근 3개월",
+         "전체", "직접 설정"],
         horizontal=True,
         key="report_period",
     )
@@ -6098,10 +6099,13 @@ def tab_report():
         date_from = date(today.year, today.month, 1)
         date_to   = max_date
         period_label = "이번 달"
-    elif period == "최근 3개월":
-        date_from = today - timedelta(days=90)
+    elif period in ("최근 1개월", "최근 2개월", "최근 3개월"):
+        # 달력의 '달'이 아니라 오늘 기준 N×30일. 보고서에 기간을 함께 찍으므로
+        # 받아보는 사람이 어느 구간인지 헷갈릴 일은 없다.
+        _months = int(re.search(r"\d+", period).group())
+        date_from = today - timedelta(days=30 * _months)
         date_to   = max_date
-        period_label = "최근 3개월"
+        period_label = period
     elif period == "전체":
         date_from = min_date
         date_to   = max_date
