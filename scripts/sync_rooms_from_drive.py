@@ -354,8 +354,19 @@ def run(dry=False):
     # 일일 입력 화면은 rooms.csv를 돈다. campaigns.csv에만 넣으면 새 방이
     # 입력 목록에 안 떠서 인원이 안 쌓인다 — 진행 중인 방은 여기도 채운다.
     # 이름은 사람이 붙인 별칭('채팅방 37 (부동산2)')이 있어 기존 값은 건드리지 않는다.
+    #
+    # 새 방 이름에 상품·기수를 함께 적는다. 예전에는 '채팅방 45'처럼 번호만
+    # 넣었는데, 아무도 이름을 채우지 않아 보고서 표에 번호만 덩그러니 남았다
+    # (2026-09 실측: 42·43·45번이 그 상태로 대표 보고에 나갔다). 시트에 상품과
+    # 기수가 이미 있으니 처음부터 붙여 준다. 사람이 나중에 고치는 건 자유다.
     known_rooms = load_rooms()
-    missing = {int(r["room_num"]): f"채팅방 {int(r['room_num'])}"
+
+    def _auto_name(r):
+        rn = int(r["room_num"])
+        p, c = str(r.get("product", "")).strip(), str(r.get("cohort", "")).strip()
+        return f"채팅방 {rn} ({p} {c})" if p and c else f"채팅방 {rn}"
+
+    missing = {int(r["room_num"]): _auto_name(r)
                for _, r in sheet_df.iterrows()
                if r["is_current"] and int(r["room_num"]) not in known_rooms}
 
